@@ -1,5 +1,5 @@
 export {
-  SigmaIssuesVie,
+  SigmaIssuesView,
   SigmaIssueWrapper,
   SigmaIssueOccurrence,
   SigmaIssueSeverity,
@@ -12,3 +12,4 @@ export {
   Triage,
   CustomTriage
 } from './models/sigma-schema'
+export { logger } from './utils/SIGLogger'

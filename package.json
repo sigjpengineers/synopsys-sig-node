@@ -18,6 +18,7 @@
   "author": "Synopsys Community",
   "license": "Apache-2.0",
   "devDependencies": {
+    "@types/node": "^17.0.21",
     "prettier": "^2.5.1"
   },
   "dependencies": {
