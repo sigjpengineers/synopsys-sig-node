@@ -1,0 +1,23 @@
+{
+  "name": "@jcroall/synopsys-sig-node",
+  "version": "1.0.3",
+  "description": "Node.js Library for Integrating with Synopsys AST Solutions",
+  "scripts": {
+    "build": "tsc",
+    "format": "prettier --write '**/*.ts'",
+    "format-check": "prettier --check '**/*.ts'",
+    "lint": "eslint src/**/*.ts",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "all": "npm run build && npm run format"
+  },
+  "main": "dist/index.js",
+  "types": "dist/index.d.js",
+  "files": [
+    "/dist"
+  ],
+  "author": "Synopsys Community",
+  "license": "Apache-2.0",
+  "devDependencies": {
+    "prettier": "^2.5.1"
+  }
+}
