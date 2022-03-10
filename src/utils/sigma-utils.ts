@@ -1,7 +1,7 @@
-import {SigmaIssueOccurrence} from "@jcroall/synopsys-sig-node/dist/models/sigma-schema";
-import {DiffMap} from "./gitlab-utils";
-import {logger} from "@jcroall/synopsys-sig-node/dist/utils/SIGLogger";
-import fs from "fs";
+import {SigmaIssueOccurrence} from "../models/sigma-schema"
+import {DiffMap} from "./gitlab-utils"
+import {logger} from "./SIGLogger"
+import * as fs from "fs"
 
 export const COMMENT_PREFACE = '<!-- Comment managed by Synopsys, do not modify! -->'
 

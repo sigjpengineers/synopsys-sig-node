@@ -22,6 +22,8 @@
     "prettier": "^2.5.1"
   },
   "dependencies": {
+    "@gitbeaker/node": "^35.4.0",
+    "axios": "^0.26.1",
     "winston": "^3.6.0"
   }
 }

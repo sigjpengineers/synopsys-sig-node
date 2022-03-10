@@ -6,7 +6,7 @@ import { CommitDiffSchema } from '@gitbeaker/core/dist/types/resources/Commits'
 import { DiscussionNotePosition } from '@gitbeaker/core/dist/types/templates/ResourceDiscussions'
 import { DiscussionSchema } from '@gitbeaker/core/dist/types/templates/ResourceDiscussions'
 
-import { logger } from "@jcroall/synopsys-sig-node/dist/utils/SIGLogger"
+import { logger } from "./SIGLogger"
 import axios from "axios"
 
 export async function getProject(gitlab_token: string, project_id: string): Promise<ProjectSchema> {
