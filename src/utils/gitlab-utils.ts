@@ -9,7 +9,7 @@ import { DiscussionSchema } from '@gitbeaker/core/dist/types/templates/ResourceD
 import { logger } from "./SIGLogger"
 import axios from "axios"
 
-export async function getProject(gitlab_token: string, project_id: string): Promise<ProjectSchema> {
+export async function getProject(gitlab_url: string, gitlab_token: string, project_id: string): Promise<ProjectSchema> {
     const api = new Gitlab({ token: gitlab_token })
 
     logger.debug(`Getting project ${project_id}`)
@@ -21,7 +21,7 @@ export async function getProject(gitlab_token: string, project_id: string): Prom
     return project
 }
 
-export async function getDiscussions(gitlab_token: string, project_id: string, merge_request_iid: number): Promise<DiscussionSchema[]> {
+export async function getDiscussions(gitlab_url: string, gitlab_token: string, project_id: string, merge_request_iid: number): Promise<DiscussionSchema[]> {
     const api = new Gitlab({ token: gitlab_token })
 
     logger.debug(`Getting merge request #${merge_request_iid} in project #${project_id}`)
@@ -44,7 +44,7 @@ export async function getDiscussions(gitlab_token: string, project_id: string, m
     return discussions
 }
 
-export async function getDiffMap(gitlab_token: string, project_id: string, merge_request_iid: number): Promise<Map<any, any>> {
+export async function getDiffMap(gitlab_url: string, gitlab_token: string, project_id: string, merge_request_iid: number): Promise<Map<any, any>> {
     const api = new Gitlab({ token: gitlab_token })
 
     logger.debug(`Getting commits for merge request #${merge_request_iid} in project #${project_id}`)
