@@ -141,11 +141,3 @@ export async function createDiscussion(gitlab_url: string, gitlab_token: string,
 
     return true
 }
-
-export type DiffMap = Map<string, Hunk[]>
-
-export interface Hunk {
-    firstLine: number
-    lastLine: number
-    sha: string
-}
