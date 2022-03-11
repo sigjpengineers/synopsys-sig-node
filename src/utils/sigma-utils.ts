@@ -5,7 +5,7 @@ import * as fs from "fs"
 
 export const COMMENT_PREFACE = '<!-- Comment managed by Synopsys, do not modify! -->'
 
-export function isInDiff(issue: SigmaIssueOccurrence, diffMap: DiffMap): boolean {
+export function sigmaIsInDiff(issue: SigmaIssueOccurrence, diffMap: DiffMap): boolean {
     //logger.debug(`Look for ${issue.filepath} in diffMap`)
     const diffHunks = diffMap.get(issue.filepath)
 
@@ -40,9 +40,9 @@ function get_line(filename: string, line_no: number): string {
     return lines[+line_no]
 }
 
-export const uuidCommentOf = (issue: SigmaIssueOccurrence): string => `<!-- ${issue.uuid} -->`
+export const sigmaUuidCommentOf = (issue: SigmaIssueOccurrence): string => `<!-- ${issue.uuid} -->`
 
-export function createMessageFromIssue(issue: SigmaIssueOccurrence): string {
+export function sigmaCreateMessageFromIssue(issue: SigmaIssueOccurrence): string {
     const issueName = issue.summary
     const checkerNameString = issue.checker_id
     const impactString = issue.severity ? issue.severity.impact : 'Unknown'
@@ -72,7 +72,7 @@ export function createMessageFromIssue(issue: SigmaIssueOccurrence): string {
     logger.debug(`suggestionString=${suggestionString}`)
 
     return `${COMMENT_PREFACE}
-${uuidCommentOf(issue)}
+${sigmaUuidCommentOf(issue)}
 # :warning: Sigma Issue - ${issueName}
 ${description}
 

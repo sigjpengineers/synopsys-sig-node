@@ -14,23 +14,23 @@ export {
 } from './models/sigma-schema'
 export { logger } from './utils/SIGLogger'
 export {
-  getProject,
-  getDiscussions,
-  getDiffMap,
-  updateNote,
-  createDiscussion,
+  gitlabGetProject,
+  gitlabGetDiscussions,
+  gitlabGetDiffMap,
+  gitlabUpdateNote,
+  gitlabCreateDiscussion,
 } from './utils/gitlab-utils'
 export {
   COMMENT_PREFACE,
-  isInDiff,
-  uuidCommentOf, 
-  createMessageFromIssue
+  sigmaIsInDiff,
+  sigmaUuidCommentOf,
+  sigmaCreateMessageFromIssue
 } from './utils/sigma-utils'
 export {
-  getExistingReviewThreads,
-  updateComment,
-  createReviewComment,
-  getAzureDiffMap,
+  azGetExistingReviewThreads,
+  azUpdateComment,
+  azCreateReviewComment,
+  azGetDiffMap,
 } from './utils/azure-utils'
 export {
   DiffMap,

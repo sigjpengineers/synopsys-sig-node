@@ -10,7 +10,7 @@ import {DiffMap} from "./diffmap";
 
 export const UNKNOWN_FILE = 'Unknown File'
 
-export async function getExistingReviewThreads(git_agent: IGitApi, repo_id: string, pull_id: number): Promise<GitPullRequestCommentThread[]> {
+export async function azGetExistingReviewThreads(git_agent: IGitApi, repo_id: string, pull_id: number): Promise<GitPullRequestCommentThread[]> {
     let threads: GitPullRequestCommentThread[] = []
 
     threads = await git_agent.getThreads(repo_id, pull_id)
@@ -28,7 +28,7 @@ export async function getExistingReviewThreads(git_agent: IGitApi, repo_id: stri
     return threads
 }
 
-export async function updateComment(git_agent: IGitApi, repo_id: string, pull_id: number, thread_id: number,
+export async function azUpdateComment(git_agent: IGitApi, repo_id: string, pull_id: number, thread_id: number,
                                     comment_id: number, comment_body: string): Promise<boolean> {
     let updated_comment: Comment = <Comment>{}
     updated_comment.content = comment_body
@@ -37,7 +37,7 @@ export async function updateComment(git_agent: IGitApi, repo_id: string, pull_id
 
     return true
 }
-export async function createReviewComment(git_agent: IGitApi, repo_id: string, pull_id: number,
+export async function azCreateReviewComment(git_agent: IGitApi, repo_id: string, pull_id: number,
                                           issue: SigmaIssueOccurrence, comment_body: string): Promise<boolean> {
     let comment: Comment = <Comment>{}
     comment.content = comment_body
@@ -62,7 +62,7 @@ export async function createReviewComment(git_agent: IGitApi, repo_id: string, p
     return true
 }
 
-export async function getAzureDiffMap(git_agent: IGitApi, repo_id: string, project_id: string, pull_id: number): Promise<Map<any, any>> {
+export async function azGetDiffMap(git_agent: IGitApi, repo_id: string, project_id: string, pull_id: number): Promise<Map<any, any>> {
     const diffMap = new Map()
 
     let path = UNKNOWN_FILE
