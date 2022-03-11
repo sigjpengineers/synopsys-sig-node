@@ -1,5 +1,5 @@
 import {SigmaIssueOccurrence} from "../models/sigma-schema"
-import {DiffMap} from "./gitlab-utils"
+import {DiffMap} from "./diffmap"
 import {logger} from "./SIGLogger"
 import * as fs from "fs"
 
