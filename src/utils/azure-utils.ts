@@ -62,7 +62,7 @@ export async function createReviewComment(git_agent: IGitApi, repo_id: string, p
     return true
 }
 
-export async function getAzureDiffMap(git_agent: IGitApi, repo_id: string, project_id: string, pull_id: number): Promise<DiffMap> {
+export async function getAzureDiffMap(git_agent: IGitApi, repo_id: string, project_id: string, pull_id: number): Promise<Map<any, any>> {
     const diffMap = new Map()
 
     let path = UNKNOWN_FILE
