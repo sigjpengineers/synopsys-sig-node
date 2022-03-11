@@ -28,3 +28,11 @@ export {
   uuidCommentOf, 
   createMessageFromIssue
 } from './utils/sigma-utils'
+export {
+  getExistingReviewThreads,
+  updateComment,
+  createReviewComment,
+  getDiffMap,
+  DiffMap,
+  Hunk
+} from './utils/azure-utils'
