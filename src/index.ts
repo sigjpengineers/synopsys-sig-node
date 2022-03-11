@@ -19,8 +19,6 @@ export {
   getDiffMap,
   updateNote,
   createDiscussion,
-  DiffMap,
-  Hunk
 } from './utils/gitlab-utils'
 export {
   COMMENT_PREFACE,
@@ -32,7 +30,9 @@ export {
   getExistingReviewThreads,
   updateComment,
   createReviewComment,
-  getDiffMap,
+  getAzureDiffMap,
+} from './utils/azure-utils'
+export {
   DiffMap,
   Hunk
-} from './utils/azure-utils'
+} from './utils/diffmap'

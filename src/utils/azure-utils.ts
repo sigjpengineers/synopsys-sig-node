@@ -6,6 +6,7 @@ import {
 } from "azure-devops-node-api/interfaces/GitInterfaces"
 import {SigmaIssueOccurrence} from "../models/sigma-schema"
 import {logger} from "./SIGLogger";
+import {DiffMap} from "./diffmap";
 
 export const UNKNOWN_FILE = 'Unknown File'
 
@@ -61,7 +62,7 @@ export async function createReviewComment(git_agent: IGitApi, repo_id: string, p
     return true
 }
 
-export async function getDiffMap(git_agent: IGitApi, repo_id: string, project_id: string, pull_id: number): Promise<DiffMap> {
+export async function getAzureDiffMap(git_agent: IGitApi, repo_id: string, project_id: string, pull_id: number): Promise<DiffMap> {
     const diffMap = new Map()
 
     let path = UNKNOWN_FILE
@@ -121,11 +122,4 @@ export async function getDiffMap(git_agent: IGitApi, repo_id: string, project_id
     }
 
     return diffMap
-}
-
-export type DiffMap = Map<string, Hunk[]>
-
-export interface Hunk {
-    firstLine: number
-    lastLine: number
 }
