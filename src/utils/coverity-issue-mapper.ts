@@ -3,7 +3,7 @@ import {CoverityApiService, IIssuesSearchResponse, IResponseCell, KEY_ACTION, KE
 
 const PAGE_SIZE = 500
 
-export class ProjectIssue {
+export class CoverityProjectIssue {
     cid: string
     mergeKey: string | null
     action: string
@@ -22,18 +22,18 @@ export class ProjectIssue {
 }
 
 // FIXME This is very inefficient for projects with lots of issues. When filtering by mergeKey is fixed, we should use that instead.
-export async function mapMatchingMergeKeys(coverity_url: string,
+export async function coverityMapMatchingMergeKeys(coverity_url: string,
                                            coverity_username: string,
                                            coverity_passphrase: string,
                                            coverity_project_name: string,
-                                           relevantMergeKeys: Set<string>): Promise<Map<string, ProjectIssue>> {
+                                           relevantMergeKeys: Set<string>): Promise<Map<string, CoverityProjectIssue>> {
     info('Checking Coverity server for existing issues...')
     const apiService = new CoverityApiService(coverity_url, coverity_username, coverity_passphrase)
 
     let totalRows = 0
     let offset = 0
 
-    const mergeKeyToProjectIssue = new Map<string, ProjectIssue>()
+    const mergeKeyToProjectIssue = new Map<string, CoverityProjectIssue>()
 
     while (offset <= totalRows && mergeKeyToProjectIssue.size < relevantMergeKeys.size) {
         try {
@@ -56,7 +56,7 @@ export async function mapMatchingMergeKeys(coverity_url: string,
     return mergeKeyToProjectIssue
 }
 
-function toProjectIssue(issueRows: IResponseCell[]): ProjectIssue {
+function toProjectIssue(issueRows: IResponseCell[]): CoverityProjectIssue {
     let cid = ''
     let mergeKey = null
     let action = ''
@@ -78,5 +78,5 @@ function toProjectIssue(issueRows: IResponseCell[]): ProjectIssue {
             lastSnapshotId = issueCol.value
         }
     }
-    return new ProjectIssue(cid, mergeKey, action, classification, firstSnapshotId, lastSnapshotId)
+    return new CoverityProjectIssue(cid, mergeKey, action, classification, firstSnapshotId, lastSnapshotId)
 }

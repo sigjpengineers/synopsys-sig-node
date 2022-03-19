@@ -57,8 +57,8 @@ export {
   cleanUrl
 } from './utils/coverity-api'
 export {
-  ProjectIssue,
-  mapMatchingMergeKeys
+  CoverityProjectIssue,
+  coverityMapMatchingMergeKeys
 } from './utils/coverity-issue-mapper'
 export {
   coverityIsPresent,
