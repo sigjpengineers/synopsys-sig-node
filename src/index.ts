@@ -36,3 +36,33 @@ export {
   DiffMap,
   Hunk
 } from './utils/diffmap'
+export {
+  githubIsPullRequest,
+  githubGetSha,
+  githubGetPullRequestNumber,
+  githubRelativizePath,
+  githubGetPullRequestDiff,
+  githubGetExistingReviewComments,
+  githubUpdateExistingReviewComment,
+  githubCreateReview,
+  githubGetExistingIssueComments,
+  githubUpdateExistingIssueComment,
+  githubCreateIssueComment,
+  githubGetDiffMap
+} from './utils/github-utils'
+export {
+  IIssuesSearchResponse,
+  IResponseCell,
+  CoverityApiService,
+  cleanUrl
+} from './utils/coverity-api'
+export {
+  ProjectIssue,
+  mapMatchingMergeKeys
+} from './utils/coverity-issue-mapper'
+export {
+  coverityIsPresent,
+  coverityCreateNoLongerPresentMessage,
+  coverityCreateReviewCommentMessage,
+  coverityCreateIssueCommentMessage
+} from './utils/coverity-utils'

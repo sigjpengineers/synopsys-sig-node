@@ -1,18 +1,17 @@
 import {ExistingIssueComment, ExistingReviewComment, NewReviewComment, PullRequest} from '../_namespaces/github'
 import {context, getOctokit} from '@actions/github'
 import {UNKNOWN_FILE} from "./coverity-utils";
-import {logger} from "./SIGLogger";
 import {DiffMap} from "./diffmap";
 
 const prEvents = ['pull_request', 'pull_request_review', 'pull_request_review_comment']
 
-export function isPullRequest(): boolean {
+export function githubIsPullRequest(): boolean {
     return prEvents.includes(context.eventName)
 }
 
 export function githubGetSha(): string {
     let sha = context.sha
-    if (isPullRequest()) {
+    if (githubIsPullRequest()) {
         const pull = context.payload.pull_request as PullRequest
         if (pull?.head.sha) {
             sha = pull?.head.sha
@@ -24,7 +23,7 @@ export function githubGetSha(): string {
 
 export function githubGetPullRequestNumber(): number | undefined {
     let pr_number = undefined
-    if (isPullRequest()) {
+    if (githubIsPullRequest()) {
         const pull = context.payload.pull_request as PullRequest
         if (pull?.number) {
             pr_number = pull.number
