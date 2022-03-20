@@ -1,5 +1,6 @@
 import {CoverityIssueOccurrence} from "../models/coverity-json-v7-schema";
 import {logger} from "./SIGLogger";
+import {githubRelativizePath} from "./github-utils";
 
 export const PRESENT = 'PRESENT'
 export const NOT_PRESENT = 'NOT_PRESENT'
@@ -52,9 +53,7 @@ ${remediationString}
 
 export function coverityCreateIssueCommentMessage(issue: CoverityIssueOccurrence): string {
     const message = coverityCreateReviewCommentMessage(issue)
-    // TODO: Does this need to be relativized, or can use stripped path?
-    // const relativePath = githubRelativizePath(issue.mainEventFilePathname)
-    const relativePath = issue.mainEventFilePathname
+    const relativePath = githubRelativizePath(issue.mainEventFilePathname)
 
     return `${message}
 ## Issue location
