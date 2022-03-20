@@ -65,8 +65,8 @@ export {
   githubGetDiffMap
 } from './utils/github-utils'
 export {
-  CoverityIIssuesSearchResponse,
-  CoverityIResponseCell,
+  ICoverityIssuesSearchResponse,
+  ICoverityResponseCell,
   CoverityApiService,
   cleanUrl
 } from './utils/coverity-api'

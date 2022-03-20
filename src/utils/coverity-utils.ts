@@ -1,4 +1,4 @@
-import {IssueOccurrence} from "../models/coverity-json-v7-schema";
+import {CoverityIssueOccurrence} from "../models/coverity-json-v7-schema";
 import {logger} from "./SIGLogger";
 
 export const PRESENT = 'PRESENT'
@@ -26,7 +26,7 @@ ${existingMessageLines.slice(4).join('\n')}
 </details>`
 }
 
-export function coverityCreateReviewCommentMessage(issue: IssueOccurrence): string {
+export function coverityCreateReviewCommentMessage(issue: CoverityIssueOccurrence): string {
     const issueName = issue.checkerProperties ? issue.checkerProperties.subcategoryShortDescription : issue.checkerName
     const checkerNameString = issue.checkerProperties ? `\r\n_${issue.checkerName}_` : ''
     const impactString = issue.checkerProperties ? issue.checkerProperties.impact : 'Unknown'
@@ -50,7 +50,7 @@ ${remediationString}
 `
 }
 
-export function coverityCreateIssueCommentMessage(issue: IssueOccurrence): string {
+export function coverityCreateIssueCommentMessage(issue: CoverityIssueOccurrence): string {
     const message = coverityCreateReviewCommentMessage(issue)
     // TODO: Does this need to be relativized, or can use stripped path?
     // const relativePath = githubRelativizePath(issue.mainEventFilePathname)
