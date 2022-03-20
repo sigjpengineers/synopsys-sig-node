@@ -12,6 +12,20 @@ export {
   Triage,
   CustomTriage
 } from './models/sigma-schema'
+export {
+  CoverityIssuesView,
+  CoverityIssueOccurrence,
+  CoverityEvent,
+  CoverityCheckerProperties,
+  CoverityStateOnServer,
+  CoverityTriage,
+  CoverityCustomTriage,
+  CoverityError,
+  CoverityDesktopAnalysisSettings,
+  CoverityReferenceSnapshotDetails,
+  CoverityPortableAnalysisSettings,
+  CoverityFileCheckerOption
+} from './models/coverity-json-v7-schema'
 export { logger } from './utils/SIGLogger'
 export {
   gitlabGetProject,
@@ -54,7 +68,7 @@ export {
   CoverityIIssuesSearchResponse,
   CoverityIResponseCell,
   CoverityApiService,
-  coverityCleanUrl
+  cleanUrl
 } from './utils/coverity-api'
 export {
   CoverityProjectIssue,

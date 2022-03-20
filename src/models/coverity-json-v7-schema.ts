@@ -2,15 +2,15 @@ export interface CoverityIssuesView {
     type: string
     formatVersion: number
     suppressedIssueCount: number
-    issues: IssueOccurrence[]
-    error?: Error
-    warnings: Error[]
-    desktopAnalysisSettings: DesktopAnalysisSettings
+    issues: CoverityIssueOccurrence[]
+    error?: CoverityError
+    warnings: CoverityError[]
+    desktopAnalysisSettings: CoverityDesktopAnalysisSettings
 }
 
 // Issues
 
-export interface IssueOccurrence {
+export interface CoverityIssueOccurrence {
     mergeKey: string
     occurrenceCountForMK: number
     occurrenceNumberInMK: number
@@ -30,12 +30,12 @@ export interface IssueOccurrence {
     functionMangledName?: string
     localStatus?: string
     ordered: boolean
-    events: Event[]
-    checkerProperties?: CheckerProperties
-    stateOnServer?: StateOnServer
+    events: CoverityEvent[]
+    checkerProperties?: CoverityCheckerProperties
+    stateOnServer?: CoverityStateOnServer
 }
 
-export interface Event {
+export interface CoverityEvent {
     covLStrEventDescription: string
     eventDescription: string
     eventNumber: number
@@ -48,10 +48,10 @@ export interface Event {
     main: boolean
     moreInformationId?: string
     remediation: boolean
-    events?: Event[]
+    events?: CoverityEvent[]
 }
 
-export interface CheckerProperties {
+export interface CoverityCheckerProperties {
     category: string
     categoryDescription: string
     cweCategory: string
@@ -65,7 +65,7 @@ export interface CheckerProperties {
     MISRACategory?: string
 }
 
-export interface StateOnServer {
+export interface CoverityStateOnServer {
     cid: number
     presentInReferenceSnapshot: boolean
     firstDetectedDateTime: string
@@ -75,11 +75,11 @@ export interface StateOnServer {
     cached: boolean
     retrievalDateTime: string
     ownerLdapServerName: string
-    triage: Triage
-    customTriage: CustomTriage
+    triage: CoverityTriage
+    customTriage: CoverityCustomTriage
 }
 
-export interface Triage {
+export interface CoverityTriage {
     classification: string
     action: string
     fixTarget: string
@@ -89,13 +89,13 @@ export interface Triage {
     externalReference: string
 }
 
-export interface CustomTriage {
+export interface CoverityCustomTriage {
     // set of key-value pairs
 }
 
 // Error/Warnings
 
-export interface Error {
+export interface CoverityError {
     errorType: string
     errorSubType: string
     errorMessage: any
@@ -104,7 +104,7 @@ export interface Error {
 
 // Desktop Analysis Settings
 
-export interface DesktopAnalysisSettings {
+export interface CoverityDesktopAnalysisSettings {
     analysisDateTime: string
     covRunDesktopArgs: string[]
     effectiveStripPaths: string[]
@@ -114,11 +114,11 @@ export interface DesktopAnalysisSettings {
     strippedAuxiliaryScopePathnames: string[]
     relativeTo?: string
     intermediateDir: string
-    effectiveAnalysisSettings: PortableAnalysisSettings
-    referenceSnapshot?: ReferenceSnapshotDetails
+    effectiveAnalysisSettings: CoverityPortableAnalysisSettings
+    referenceSnapshot?: CoverityReferenceSnapshotDetails
 }
 
-export interface ReferenceSnapshotDetails {
+export interface CoverityReferenceSnapshotDetails {
     snapshotId: number
     codeVersionDateTime: string
     description: string
@@ -126,17 +126,17 @@ export interface ReferenceSnapshotDetails {
     analysisVersion: string
     analysisVersionOverride: string
     target: string
-    analysisSettings: PortableAnalysisSettings
+    analysisSettings: CoverityPortableAnalysisSettings
 }
 
-export interface PortableAnalysisSettings {
+export interface CoverityPortableAnalysisSettings {
     covAnalyzeArgs: string[]
     fbExcludeConfigurations: string[]
     fbIncludeConfiguration: string
-    fileCheckerOptions: FileCheckerOption[]
+    fileCheckerOptions: CoverityFileCheckerOption[]
 }
 
-export interface FileCheckerOption {
+export interface CoverityFileCheckerOption {
     checkerName: string
     optionName: string
     fileContents: string
