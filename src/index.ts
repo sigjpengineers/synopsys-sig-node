@@ -51,10 +51,10 @@ export {
   githubGetDiffMap
 } from './utils/github-utils'
 export {
-  IIssuesSearchResponse,
-  IResponseCell,
+  CoverityIIssuesSearchResponse,
+  CoverityIResponseCell,
   CoverityApiService,
-  cleanUrl
+  coverityCleanUrl
 } from './utils/coverity-api'
 export {
   CoverityProjectIssue,

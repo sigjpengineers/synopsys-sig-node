@@ -1,5 +1,8 @@
 import {debug, info} from '@actions/core'
-import {CoverityApiService, IIssuesSearchResponse, IResponseCell, KEY_ACTION, KEY_CID, KEY_CLASSIFICATION, KEY_FIRST_SNAPSHOT_ID, KEY_LAST_SNAPSHOT_ID, KEY_MERGE_KEY} from './coverity-api'
+import {CoverityApiService,
+    ICoverityResponseCell,
+    KEY_ACTION, KEY_CID, KEY_CLASSIFICATION, KEY_FIRST_SNAPSHOT_ID, KEY_LAST_SNAPSHOT_ID, KEY_MERGE_KEY
+} from './coverity-api'
 
 const PAGE_SIZE = 500
 
@@ -56,7 +59,7 @@ export async function coverityMapMatchingMergeKeys(coverity_url: string,
     return mergeKeyToProjectIssue
 }
 
-function toProjectIssue(issueRows: IResponseCell[]): CoverityProjectIssue {
+function toProjectIssue(issueRows: ICoverityResponseCell[]): CoverityProjectIssue {
     let cid = ''
     let mergeKey = null
     let action = ''

@@ -1,6 +1,6 @@
 import {debug} from '@actions/core'
 import {IRequestQueryParams} from 'typed-rest-client/Interfaces'
-import {BasicCredentialHandler, BearerCredentialHandler} from 'typed-rest-client/Handlers'
+import {BasicCredentialHandler} from 'typed-rest-client/Handlers'
 import {RestClient} from 'typed-rest-client/RestClient'
 
 export const KEY_CID = 'cid'
@@ -10,31 +10,31 @@ export const KEY_CLASSIFICATION = 'classification'
 export const KEY_FIRST_SNAPSHOT_ID = 'firstSnapshotId'
 export const KEY_LAST_SNAPSHOT_ID = 'lastDetectedId'
 
-export interface IIssuesSearchResponse {
+export interface ICoverityIssuesSearchResponse {
     offset: number
     totalRows: number
     columns: string[]
-    rows: IResponseCell[][]
+    rows: ICoverityResponseCell[][]
 }
 
-export interface IResponseCell {
+export interface ICoverityResponseCell {
     key: string
     value: string
 }
 
-interface IIssueOccurrenceRequest {
-    filters: IRequestFilter[]
-    snapshotScope?: ISnapshotScopeFilter
+interface ICoverityIssueOccurrenceRequest {
+    filters: ICoverityRequestFilter[]
+    snapshotScope?: ICoveritySnapshotScopeFilter
     columns: string[]
 }
 
-interface IRequestFilter {
+interface ICoverityRequestFilter {
     columnKey: string
     matchMode: string
-    matchers: IRequestFilterMatcher[]
+    matchers: ICoverityRequestFilterMatcher[]
 }
 
-interface IRequestFilterMatcher {
+interface ICoverityRequestFilterMatcher {
     type: string
     id?: string
     class?: string
@@ -43,12 +43,12 @@ interface IRequestFilterMatcher {
     date?: string
 }
 
-interface ISnapshotScopeFilter {
-    show?: ISnapshotScope
-    compareTo?: ISnapshotScope
+interface ICoveritySnapshotScopeFilter {
+    show?: ICoveritySnapshotScope
+    compareTo?: ICoveritySnapshotScope
 }
 
-interface ISnapshotScope {
+interface ICoveritySnapshotScope {
     scope: string
     includeOutdatedSnapshots: boolean
 }
@@ -70,8 +70,8 @@ export class CoverityApiService {
         })
     }
 
-    async findIssues(projectName: string, offset: number, limit: number): Promise<IIssuesSearchResponse> {
-        const requestBody: IIssueOccurrenceRequest = {
+    async findIssues(projectName: string, offset: number, limit: number): Promise<ICoverityIssuesSearchResponse> {
+        const requestBody: ICoverityIssueOccurrenceRequest = {
             filters: [
                 {
                     columnKey: 'project',
@@ -97,12 +97,12 @@ export class CoverityApiService {
                 sortOrder: 'asc'
             }
         }
-        const response = await this.restClient.create<IIssuesSearchResponse>('/api/v2/issues/search', requestBody, {queryParameters})
+        const response = await this.restClient.create<ICoverityIssuesSearchResponse>('/api/v2/issues/search', requestBody, {queryParameters})
         if (response.statusCode < 200 || response.statusCode >= 300) {
             debug(`Coverity response error: ${response.result}`)
             return Promise.reject(`Failed to retrieve issues from Coverity for project '${projectName}': ${response.statusCode}`)
         }
-        return Promise.resolve(response.result as IIssuesSearchResponse)
+        return Promise.resolve(response.result as ICoverityIssuesSearchResponse)
     }
 }
 
