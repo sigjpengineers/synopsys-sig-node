@@ -76,8 +76,7 @@ export {
 } from './utils/coverity-issue-mapper'
 export {
   COVERITY_COMMENT_PREFACE,
-  COVERITY_ZZZ,
-  CoverityZZZ,
+  COMMENT_PREFACE,
   coverityIsPresent,
   coverityCreateNoLongerPresentMessage,
   coverityCreateReviewCommentMessage,
