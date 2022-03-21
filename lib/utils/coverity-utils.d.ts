@@ -1,0 +1,12 @@
+import { CoverityIssueOccurrence } from "../models/coverity-json-v7-schema";
+export declare const PRESENT = "PRESENT";
+export declare const NOT_PRESENT = "NOT_PRESENT";
+export declare const UNKNOWN_FILE = "Unknown File";
+export declare const COVERITY_COMMENT_PREFACE = "<!-- Comment managed by coverity-report-output-v7, do not modify!";
+export declare const COMMENT_PREFACE = "<!-- Comment managed by coverity-report-output-v7, do not modify!";
+export declare const COVERITY_ZZZ = "COVERITY ZZZ";
+export declare const CoverityZZZ = "CoverityZZZ";
+export declare function coverityIsPresent(existingMessage: string): boolean;
+export declare function coverityCreateNoLongerPresentMessage(existingMessage: string): string;
+export declare function coverityCreateReviewCommentMessage(issue: CoverityIssueOccurrence): string;
+export declare function coverityCreateIssueCommentMessage(issue: CoverityIssueOccurrence): string;
