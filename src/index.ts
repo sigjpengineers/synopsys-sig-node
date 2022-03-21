@@ -75,9 +75,9 @@ export {
   coverityMapMatchingMergeKeys
 } from './utils/coverity-issue-mapper'
 export {
+  COVERITY_COMMENT_PREFACE,
   coverityIsPresent,
   coverityCreateNoLongerPresentMessage,
   coverityCreateReviewCommentMessage,
-  coverityCreateIssueCommentMessage,
-  COVERITY_COMMENT_PREFACE
+  coverityCreateIssueCommentMessage
 } from './utils/coverity-utils'
