@@ -35,7 +35,7 @@ export {
   gitlabCreateDiscussion,
 } from './utils/gitlab-utils'
 export {
-  COMMENT_PREFACE,
+  SIGMA_COMMENT_PREFACE,
   sigmaIsInDiff,
   sigmaUuidCommentOf,
   sigmaCreateMessageFromIssue
@@ -76,6 +76,7 @@ export {
 } from './utils/coverity-issue-mapper'
 export {
   COVERITY_COMMENT_PREFACE,
+  COVERITY_ZZZ,
   coverityIsPresent,
   coverityCreateNoLongerPresentMessage,
   coverityCreateReviewCommentMessage,
