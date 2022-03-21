@@ -1,6 +1,6 @@
 {
   "name": "@jcroall/synopsys-sig-node",
-  "version": "1.0.39",
+  "version": "1.0.40",
   "description": "Node.js Library for Integrating with Synopsys AST Solutions",
   "scripts": {
     "clean": "rm -rf lib",
