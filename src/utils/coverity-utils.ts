@@ -5,7 +5,7 @@ import {githubRelativizePath} from "./github-utils";
 export const PRESENT = 'PRESENT'
 export const NOT_PRESENT = 'NOT_PRESENT'
 export const UNKNOWN_FILE = 'Unknown File'
-export const COMMENT_PREFACE = '<!-- Comment managed by coverity-report-output-v7 action, do not modify!'
+export const COVERITY_COMMENT_PREFACE = '<!-- Comment managed by coverity-report-output-v7, do not modify!'
 
 export function coverityIsPresent(existingMessage: string): boolean {
     const lines = existingMessage.split('\n')
@@ -37,7 +37,7 @@ export function coverityCreateReviewCommentMessage(issue: CoverityIssueOccurrenc
     const remediationEvent = issue.events.find(event => event.remediation === true)
     const remediationString = remediationEvent ? `## How to fix\r\n ${remediationEvent.eventDescription}` : ''
 
-    return `${COMMENT_PREFACE}
+    return `${COVERITY_COMMENT_PREFACE}
 ${issue.mergeKey}
 ${PRESENT}
 -->
