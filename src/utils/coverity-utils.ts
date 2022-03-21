@@ -1,6 +1,7 @@
 import {CoverityIssueOccurrence} from "../models/coverity-json-v7-schema";
 import {logger} from "./SIGLogger";
 import {githubRelativizePath} from "./github-utils";
+import {DiffMap} from "./diffmap";
 
 export const COVERITY_PRESENT = 'PRESENT'
 export const COVERITY_NOT_PRESENT = 'NOT_PRESENT'
@@ -62,4 +63,13 @@ This issue was discovered outside the diff for this Pull Request. You can find i
 `
 }
 
+export function coverityIsInDiff(issue: CoverityIssueOccurrence, diffMap: DiffMap): boolean {
+    const diffHunks = diffMap.get(issue.mainEventFilePathname)
+
+    if (!diffHunks) {
+        return false
+    }
+
+    return diffHunks.filter(hunk => hunk.firstLine <= issue.mainEventLineNumber).some(hunk => issue.mainEventLineNumber <= hunk.lastLine)
+}
 

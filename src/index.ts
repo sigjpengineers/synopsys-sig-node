@@ -79,6 +79,7 @@ export {
   coverityCreateNoLongerPresentMessage,
   coverityCreateReviewCommentMessage,
   coverityCreateIssueCommentMessage,
+  coverityIsInDiff,
   COVERITY_COMMENT_PREFACE,
   COVERITY_NOT_PRESENT,
   COVERITY_PRESENT,
