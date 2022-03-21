@@ -78,5 +78,6 @@ export {
   coverityIsPresent,
   coverityCreateNoLongerPresentMessage,
   coverityCreateReviewCommentMessage,
-  coverityCreateIssueCommentMessage
+  coverityCreateIssueCommentMessage,
+  COVERITY_COMMENT_PREFACE
 } from './utils/coverity-utils'
