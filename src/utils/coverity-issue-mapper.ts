@@ -1,8 +1,8 @@
-import {debug, info} from '@actions/core'
 import {CoverityApiService,
     ICoverityResponseCell,
     KEY_ACTION, KEY_CID, KEY_CLASSIFICATION, KEY_FIRST_SNAPSHOT_ID, KEY_LAST_SNAPSHOT_ID, KEY_MERGE_KEY
 } from './coverity-api'
+import {logger} from "./SIGLogger";
 
 const PAGE_SIZE = 500
 
@@ -30,7 +30,7 @@ export async function coverityMapMatchingMergeKeys(coverity_url: string,
                                            coverity_passphrase: string,
                                            coverity_project_name: string,
                                            relevantMergeKeys: Set<string>): Promise<Map<string, CoverityProjectIssue>> {
-    info('Checking Coverity server for existing issues...')
+    logger.info('Checking Coverity server for existing issues...')
     const apiService = new CoverityApiService(coverity_url, coverity_username, coverity_passphrase)
 
     let totalRows = 0
@@ -42,7 +42,7 @@ export async function coverityMapMatchingMergeKeys(coverity_url: string,
         try {
             const covProjectIssues = await apiService.findIssues(coverity_project_name, offset, PAGE_SIZE)
             totalRows = covProjectIssues.totalRows
-            debug(`Found ${covProjectIssues?.rows.length} potentially matching issues on the server`)
+            logger.debug(`Found ${covProjectIssues?.rows.length} potentially matching issues on the server`)
 
             covProjectIssues.rows
                 .map(row => toProjectIssue(row))
@@ -55,7 +55,7 @@ export async function coverityMapMatchingMergeKeys(coverity_url: string,
         offset += PAGE_SIZE
     }
 
-    info(`Found ${mergeKeyToProjectIssue.size} existing issues`)
+    logger.info(`Found ${mergeKeyToProjectIssue.size} existing issues`)
     return mergeKeyToProjectIssue
 }
 
