@@ -1,18 +1,18 @@
 import {CoverityIssueOccurrence} from "../models/coverity-json-v7-schema";
 import {logger} from "./SIGLogger";
 import {githubRelativizePath} from "./github-utils";
-import {COMMENT_PREFACE, NOT_PRESENT, PRESENT} from "./coverity-constants";
+import {COVERITY_COMMENT_PREFACE, COVERITY_NOT_PRESENT, COVERITY_PRESENT, COVERITY_UNKNOWN_FILE} from "./coverity-constants";
 
 export function coverityIsPresent(existingMessage: string): boolean {
     const lines = existingMessage.split('\n')
-    return lines.length > 3 && lines[2] !== NOT_PRESENT
+    return lines.length > 3 && lines[2] !== COVERITY_NOT_PRESENT
 }
 
 export function coverityCreateNoLongerPresentMessage(existingMessage: string): string {
     const existingMessageLines = existingMessage.split('\n')
     return `${existingMessageLines[0]}
 ${existingMessageLines[1]}
-${NOT_PRESENT}
+${COVERITY_NOT_PRESENT}
 -->
 
 Coverity issue no longer present as of: ${process.env.GITHUB_SHA}
@@ -33,9 +33,9 @@ export function coverityCreateReviewCommentMessage(issue: CoverityIssueOccurrenc
     const remediationEvent = issue.events.find(event => event.remediation === true)
     const remediationString = remediationEvent ? `## How to fix\r\n ${remediationEvent.eventDescription}` : ''
 
-    return `${COMMENT_PREFACE}
+    return `${COVERITY_COMMENT_PREFACE}
 ${issue.mergeKey}
-${PRESENT}
+${COVERITY_PRESENT}
 -->
 
 # Coverity Issue - ${issueName}

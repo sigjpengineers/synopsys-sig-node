@@ -81,7 +81,7 @@ export {
   coverityCreateIssueCommentMessage
 } from './utils/coverity-utils'
 export {
-  COMMENT_PREFACE,
-  NOT_PRESENT,
-  PRESENT
+  COVERITY_COMMENT_PREFACE,
+  COVERITY_NOT_PRESENT,
+  COVERITY_PRESENT
 } from "./utils/coverity-constants"
