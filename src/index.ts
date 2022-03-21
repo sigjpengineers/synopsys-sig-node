@@ -78,10 +78,9 @@ export {
   coverityIsPresent,
   coverityCreateNoLongerPresentMessage,
   coverityCreateReviewCommentMessage,
-  coverityCreateIssueCommentMessage
-} from './utils/coverity-utils'
-export {
+  coverityCreateIssueCommentMessage,
   COVERITY_COMMENT_PREFACE,
   COVERITY_NOT_PRESENT,
-  COVERITY_PRESENT
-} from "./utils/coverity-constants"
+  COVERITY_PRESENT,
+  COVERITY_UNKNOWN_FILE
+} from './utils/coverity-utils'

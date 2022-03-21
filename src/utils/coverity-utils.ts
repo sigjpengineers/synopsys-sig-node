@@ -1,7 +1,11 @@
 import {CoverityIssueOccurrence} from "../models/coverity-json-v7-schema";
 import {logger} from "./SIGLogger";
 import {githubRelativizePath} from "./github-utils";
-import {COVERITY_COMMENT_PREFACE, COVERITY_NOT_PRESENT, COVERITY_PRESENT, COVERITY_UNKNOWN_FILE} from "./coverity-constants";
+
+export const COVERITY_PRESENT = 'PRESENT'
+export const COVERITY_NOT_PRESENT = 'NOT_PRESENT'
+export const COVERITY_UNKNOWN_FILE = 'Unknown File'
+export const COVERITY_COMMENT_PREFACE = '<!-- Comment managed by coverity-report-output-v7, do not modify!'
 
 export function coverityIsPresent(existingMessage: string): boolean {
     const lines = existingMessage.split('\n')
