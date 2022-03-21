@@ -75,10 +75,13 @@ export {
   coverityMapMatchingMergeKeys
 } from './utils/coverity-issue-mapper'
 export {
-  COVERITY_COMMENT_PREFACE,
-  COMMENT_PREFACE,
   coverityIsPresent,
   coverityCreateNoLongerPresentMessage,
   coverityCreateReviewCommentMessage,
   coverityCreateIssueCommentMessage
 } from './utils/coverity-utils'
+export {
+  COMMENT_PREFACE,
+  NOT_PRESENT,
+  PRESENT
+} from "./utils/coverity-constants"

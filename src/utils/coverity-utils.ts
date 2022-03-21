@@ -1,14 +1,7 @@
 import {CoverityIssueOccurrence} from "../models/coverity-json-v7-schema";
 import {logger} from "./SIGLogger";
 import {githubRelativizePath} from "./github-utils";
-
-export const PRESENT = 'PRESENT'
-export const NOT_PRESENT = 'NOT_PRESENT'
-export const UNKNOWN_FILE = 'Unknown File'
-export const COVERITY_COMMENT_PREFACE = '<!-- Comment managed by coverity-report-output-v7, do not modify!'
-export const COMMENT_PREFACE = '<!-- Comment managed by coverity-report-output-v7, do not modify!'
-export const COVERITY_ZZZ = "COVERITY ZZZ"
-export const CoverityZZZ = "CoverityZZZ"
+import {COMMENT_PREFACE, NOT_PRESENT, PRESENT} from "./coverity-constants";
 
 export function coverityIsPresent(existingMessage: string): boolean {
     const lines = existingMessage.split('\n')
@@ -40,7 +33,7 @@ export function coverityCreateReviewCommentMessage(issue: CoverityIssueOccurrenc
     const remediationEvent = issue.events.find(event => event.remediation === true)
     const remediationString = remediationEvent ? `## How to fix\r\n ${remediationEvent.eventDescription}` : ''
 
-    return `${COVERITY_COMMENT_PREFACE}
+    return `${COMMENT_PREFACE}
 ${issue.mergeKey}
 ${PRESENT}
 -->
