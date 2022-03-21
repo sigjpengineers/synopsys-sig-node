@@ -77,6 +77,7 @@ export {
 export {
   COVERITY_COMMENT_PREFACE,
   COVERITY_ZZZ,
+  CoverityZZZ,
   coverityIsPresent,
   coverityCreateNoLongerPresentMessage,
   coverityCreateReviewCommentMessage,
