@@ -24,6 +24,7 @@ export interface CoverityIssueOccurrence {
     language?: string
     'code-language'?: string
     mainEventFilePathname: string
+    strippedMainEventFilePathname: string
     mainEventLineNumber: number
     properties: Map<string, string> | any
     functionDisplayName?: string
