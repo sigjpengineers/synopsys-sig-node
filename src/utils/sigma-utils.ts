@@ -71,7 +71,7 @@ export function sigmaCreateMessageFromIssue(issue: SigmaIssueOccurrence): string
     const suggestionString = suggestion ? '\n```suggestion\n' + suggestion + '\n```' : ''
     logger.debug(`suggestionString=${suggestionString}`)
 
-    return `${COMMENT_PREFACE}
+    return `${SIGMA_COMMENT_PREFACE}
 ${sigmaUuidCommentOf(issue)}
 # :warning: Sigma Issue - ${issueName}
 ${description}
