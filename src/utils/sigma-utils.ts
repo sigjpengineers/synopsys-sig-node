@@ -3,7 +3,7 @@ import {DiffMap} from "./diffmap"
 import {logger} from "./SIGLogger"
 import * as fs from "fs"
 
-export const COMMENT_PREFACE = '<!-- Comment managed by Synopsys, do not modify! -->'
+export const SIGMA_COMMENT_PREFACE = '<!-- Comment managed by Synopsys, do not modify! -->'
 
 export function sigmaIsInDiff(issue: SigmaIssueOccurrence, diffMap: DiffMap): boolean {
     //logger.debug(`Look for ${issue.filepath} in diffMap`)
