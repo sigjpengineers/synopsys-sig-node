@@ -134,6 +134,8 @@ export async function gitlabCreateDiscussion(gitlab_url: string, gitlab_token: s
             headers: headers
         })
 
+    logger.debug(`res=${res.status} res=${res.data} status=${res.statusText} h=${res.headers}`)
+
     if (res.status > 201) {
         logger.error(`Unable to create discussion for ${filename}:${line} at ${url}`)
         return false
