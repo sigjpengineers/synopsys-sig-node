@@ -2,6 +2,7 @@ import {CoverityIssueOccurrence} from "../models/coverity-json-v7-schema";
 import {logger} from "./SIGLogger";
 import {githubRelativizePath} from "./github-utils";
 import {DiffMap} from "./diffmap";
+import {relatavize_path} from "./misc-utils";
 
 export const COVERITY_PRESENT = 'PRESENT'
 export const COVERITY_NOT_PRESENT = 'NOT_PRESENT'
@@ -54,7 +55,7 @@ ${remediationString}
 
 export function coverityCreateIssueCommentMessage(issue: CoverityIssueOccurrence): string {
     const message = coverityCreateReviewCommentMessage(issue)
-    const relativePath = githubRelativizePath(issue.mainEventFilePathname)
+    const relativePath = relatavize_path(process.cwd(), issue.strippedMainEventFilePathname)
 
     return `${message}
 ## Issue location
