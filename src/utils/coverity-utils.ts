@@ -65,7 +65,8 @@ This issue was discovered outside the diff for this Pull Request. You can find i
 }
 
 export function coverityIsInDiff(issue: CoverityIssueOccurrence, diffMap: DiffMap): boolean {
-    const diffHunks = diffMap.get(issue.mainEventFilePathname)
+    const relativePath = relatavize_path(process.cwd(), issue.strippedMainEventFilePathname)
+    const diffHunks = diffMap.get(relativePath)
 
     if (!diffHunks) {
         return false
