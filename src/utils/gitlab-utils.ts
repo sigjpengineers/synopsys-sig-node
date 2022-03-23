@@ -144,18 +144,26 @@ export async function gitlabCreateDiscussion(gitlab_url: string, gitlab_token: s
 
     logger.debug(`url=${url}`)
 
-    const res = await axios.post(url,
-        formData, {
-            headers: headers
-        })
+    let res = undefined
+    try {
+        res = await axios.post(url,
+            formData, {
+                headers: headers
+            })
 
-    logger.info(`res=${res.status} res=${res.data} status=${res.statusText} h=${res.headers}`)
+        logger.info(`res=${res.status} res=${res.data} status=${res.statusText} h=${res.headers}`)
 
-    if (res.status > 201) {
-        logger.error(`Unable to create discussion for ${filename}:${line} at ${url}`)
-        logger.debug(`ERROR`)
-        return false
+        if (res.status > 201) {
+            logger.error(`Unable to create discussion for ${filename}:${line} at ${url}`)
+            logger.debug(`ERROR`)
+            return false
+        }
+
+    } catch (error) {
+        // we'll proceed, but let's report it
+        logger.debug(`ERROR: ${error.message}`)
     }
+
 
     logger.debug(`OK`)
 
