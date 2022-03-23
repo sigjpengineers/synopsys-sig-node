@@ -159,7 +159,7 @@ export async function gitlabCreateDiscussion(gitlab_url: string, gitlab_token: s
             return false
         }
 
-    } catch (error) {
+    } catch (error: any) {
         // we'll proceed, but let's report it
         logger.debug(`ERROR: ${error.message}`)
     }
