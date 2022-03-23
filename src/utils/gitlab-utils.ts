@@ -111,6 +111,8 @@ export async function gitlabCreateDiscussion(gitlab_url: string, gitlab_token: s
     // JC: GitBeaker isn't working for this case (filed https://github.com/jdalrymple/gitbeaker/issues/2396)
     // Working around using bare REST query
 
+    logger.debug(`mr=${merge_request.title}`)
+
     const FormData = require('form-data');
     const formData = new FormData();
     formData.append("body", body)
@@ -127,7 +129,11 @@ export async function gitlabCreateDiscussion(gitlab_url: string, gitlab_token: s
         'content-type': `multipart/form-data; boundary=${formData._boundary}`
     }
 
+    logger.debug(`headers=${headers}`)
+
     let url = `${gitlab_url}/api/v4/projects/${project_id}/merge_requests/${merge_request_iid}/discussions`
+
+    logger.debug(`url=${url}`)
 
     const res = await axios.post(url,
         formData, {
@@ -138,8 +144,12 @@ export async function gitlabCreateDiscussion(gitlab_url: string, gitlab_token: s
 
     if (res.status > 201) {
         logger.error(`Unable to create discussion for ${filename}:${line} at ${url}`)
+        logger.debug(`ERROR`)
         return false
     }
+
+    logger.debug(`OK`)
+
 
     return true
 }
