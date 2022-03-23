@@ -107,7 +107,7 @@ export async function gitlabCreateDiscussion(gitlab_url: string, gitlab_token: s
                                        line: number, filename: string, body: string, base_sha: string, commit_sha: string): Promise<boolean> {
     const api = new Gitlab({ token: gitlab_token })
 
-    logger.debug(`Create new discussion for merge request #${merge_request_iid} in project #${project_id}`)
+    logger.debug(`XX Create new discussion for merge request #${merge_request_iid} in project #${project_id}`)
 
     //let merge_request = await api.MergeRequests.show(project_id, merge_request_iid)
 
@@ -125,9 +125,11 @@ export async function gitlabCreateDiscussion(gitlab_url: string, gitlab_token: s
     options['position[old_path]'] = filename
     options['position[new_line]'] = line.toString()
 
+    logger.debug(`Before MRD.create`)
     api.MergeRequestDiscussions.create(project_id, merge_request_iid, body, options)
-    */
+    logger.debug(`After MRD.create`)
 
+    */
     const FormData = require('form-data');
     const formData = new FormData();
     formData.append("body", body)
@@ -144,6 +146,8 @@ export async function gitlabCreateDiscussion(gitlab_url: string, gitlab_token: s
         "PRIVATE-TOKEN": gitlab_token,
         'content-type': `multipart/form-data; boundary=${formData._boundary}`
     }
+
+    logger.info(`headers=${headers}`)
 
     let url = `${gitlab_url}/api/v4/projects/${project_id}/merge_requests/${merge_request_iid}/discussions`
 
