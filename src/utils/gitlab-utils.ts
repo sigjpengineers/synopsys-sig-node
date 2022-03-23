@@ -104,7 +104,7 @@ export async function gitlabCreateDiscussion(gitlab_url: string, gitlab_token: s
                                        line: number, filename: string, body: string, base_sha: string): Promise<boolean> {
     const api = new Gitlab({ token: gitlab_token })
 
-    logger.debug(`Create new discussion for merge request #${merge_request_iid} in project #${project_id}`)
+    logger.debug(`XX Create new discussion for merge request #${merge_request_iid} in project #${project_id}`)
 
     let merge_request = await api.MergeRequests.show(project_id, merge_request_iid)
 
