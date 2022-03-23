@@ -28,6 +28,8 @@ export async function gitlabGetDiscussions(gitlab_url: string, gitlab_token: str
     let merge_request = await api.MergeRequests.show(project_id, merge_request_iid)
     logger.debug(`Merge Request title is ${merge_request.title}`)
 
+    logger.debug(`Merge request SHA is ${merge_request.sha}`)
+
     let discussions = await api.MergeRequestDiscussions.all(project_id, merge_request_iid)
     for (const discussion of discussions) {
         logger.debug(`Discussion ${discussion.id}`)
