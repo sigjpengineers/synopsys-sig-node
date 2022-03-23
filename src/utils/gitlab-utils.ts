@@ -103,21 +103,23 @@ export async function gitlabUpdateNote(gitlab_url: string, gitlab_token: string,
     return true
 }
 export async function gitlabCreateDiscussion(gitlab_url: string, gitlab_token: string, project_id: string, merge_request_iid: number,
-                                       line: number, filename: string, body: string, base_sha: string): Promise<boolean> {
+                                       line: number, filename: string, body: string, base_sha: string, commit_sha: string): Promise<boolean> {
     const api = new Gitlab({ token: gitlab_token })
 
     logger.debug(`XX Create new discussion for merge request #${merge_request_iid} in project #${project_id}`)
 
     //let merge_request = await api.MergeRequests.show(project_id, merge_request_iid)
 
+    /*
     logger.debug(`Getting merge request #${merge_request_iid} in project #${project_id}`)
     let merge_request = await api.MergeRequests.show(project_id, merge_request_iid)
     logger.debug(`Merge Request title is ${merge_request.title}`)
+        logger.debug(`mr=${merge_request.title}`)
 
+     */
     // JC: GitBeaker isn't working for this case (filed https://github.com/jdalrymple/gitbeaker/issues/2396)
     // Working around using bare REST query
 
-    logger.debug(`mr=${merge_request.title}`)
 
     const FormData = require('form-data');
     const formData = new FormData();
@@ -125,7 +127,8 @@ export async function gitlabCreateDiscussion(gitlab_url: string, gitlab_token: s
     formData.append("position[position_type]", "text")
     formData.append("position[base_sha]", base_sha)
     formData.append("position[start_sha]", base_sha)
-    formData.append("position[head_sha]", merge_request.sha)
+    //formData.append("position[head_sha]", merge_request.sha)
+    formData.append("position[head_sha]", commit_sha)
     formData.append("position[new_path]", filename)
     formData.append("position[old_path]", filename)
     formData.append("position[new_line]", line.toString())
