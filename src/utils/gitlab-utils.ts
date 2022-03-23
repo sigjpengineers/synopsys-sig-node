@@ -121,6 +121,7 @@ export async function gitlabCreateDiscussion(gitlab_url: string, gitlab_token: s
     // JC: GitBeaker isn't working for this case (filed https://github.com/jdalrymple/gitbeaker/issues/2396)
     // Working around using bare REST query
 
+    /*
     let options: BaseRequestOptions = <BaseRequestOptions>{}
     options['body'] = body
     options['position[position_type]'] = "text"
@@ -135,7 +136,7 @@ export async function gitlabCreateDiscussion(gitlab_url: string, gitlab_token: s
     api.MergeRequestDiscussions.create(project_id, merge_request_iid, body, options)
     logger.debug(`After MRD.create`)
 
-    /*
+    */
     const FormData = require('form-data');
     const formData = new FormData();
     formData.append("body", body)
@@ -153,11 +154,11 @@ export async function gitlabCreateDiscussion(gitlab_url: string, gitlab_token: s
         'content-type': `multipart/form-data; boundary=${formData._boundary}`
     }
 
-    logger.debug(`headers=${headers}`)
+    logger.info(`headers=${headers}`)
 
     let url = `${gitlab_url}/api/v4/projects/${project_id}/merge_requests/${merge_request_iid}/discussions`
 
-    logger.debug(`url=${url}`)
+    logger.info(`url=${url}`)
 
     let res = undefined
     try {
@@ -170,20 +171,17 @@ export async function gitlabCreateDiscussion(gitlab_url: string, gitlab_token: s
 
         if (res.status > 201) {
             logger.error(`Unable to create discussion for ${filename}:${line} at ${url}`)
-            logger.debug(`ERROR`)
+            logger.info(`ERROR`)
             return false
         }
 
     } catch (error: any) {
         // we'll proceed, but let's report it
-        logger.debug(`ERROR: ${error.message}`)
+        logger.info(`ERROR: ${error.message}`)
     }
 
 
-    logger.debug(`OK`)
-
-
-     */
+    logger.info(`OK`)
 
     return true
 }
