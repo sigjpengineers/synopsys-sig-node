@@ -106,7 +106,11 @@ export async function gitlabCreateDiscussion(gitlab_url: string, gitlab_token: s
 
     logger.debug(`XX Create new discussion for merge request #${merge_request_iid} in project #${project_id}`)
 
+    //let merge_request = await api.MergeRequests.show(project_id, merge_request_iid)
+
+    logger.debug(`Getting merge request #${merge_request_iid} in project #${project_id}`)
     let merge_request = await api.MergeRequests.show(project_id, merge_request_iid)
+    logger.debug(`Merge Request title is ${merge_request.title}`)
 
     // JC: GitBeaker isn't working for this case (filed https://github.com/jdalrymple/gitbeaker/issues/2396)
     // Working around using bare REST query
