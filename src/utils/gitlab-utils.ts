@@ -151,12 +151,16 @@ export async function gitlabCreateDiscussion(gitlab_url: string, gitlab_token: s
 
     let url = `${gitlab_url}/api/v4/projects/${project_id}/merge_requests/${merge_request_iid}/discussions`
 
+    logger.info(`url=${url}`)
+
     let res = undefined
     try {
         res = await axios.post(url,
             formData, {
                 headers: headers
             })
+
+        logger.info(`res=${res.status} res=${res.data}`)
 
         if (res.status > 201) {
             logger.error(`Unable to create discussion for ${filename}:${line} at ${url}`)
