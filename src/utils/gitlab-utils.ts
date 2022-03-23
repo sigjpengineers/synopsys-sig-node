@@ -1,4 +1,4 @@
-import { Gitlab } from '@gitbeaker/node'
+import {Gitlab, MergeRequestDiscussions} from '@gitbeaker/node'
 import { Types } from '@gitbeaker/core'
 import { ProjectSchema } from '@gitbeaker/core/dist/types/resources/Projects'
 import { BaseRequestOptions } from '@gitbeaker/core/dist/types/types'
@@ -8,6 +8,7 @@ import { DiscussionSchema } from '@gitbeaker/core/dist/types/templates/ResourceD
 
 import { logger } from "./SIGLogger"
 import axios from "axios"
+import {FileDiffsCriteria} from "azure-devops-node-api/interfaces/GitInterfaces";
 
 export async function gitlabGetProject(gitlab_url: string, gitlab_token: string, project_id: string): Promise<ProjectSchema> {
     const api = new Gitlab({ token: gitlab_token })
@@ -120,7 +121,21 @@ export async function gitlabCreateDiscussion(gitlab_url: string, gitlab_token: s
     // JC: GitBeaker isn't working for this case (filed https://github.com/jdalrymple/gitbeaker/issues/2396)
     // Working around using bare REST query
 
+    let options: BaseRequestOptions = <BaseRequestOptions>{}
+    options['body'] = body
+    options['position[position_type]'] = "text"
+    options['position[base_sha]'] = base_sha
+    options['position[start_sha]'] = base_sha
+    options['position[head_sha]'] = commit_sha
+    options['position[new_path]'] = filename
+    options['position[old_path]'] = filename
+    options['position[new_line]'] = line.toString()
 
+    logger.debug(`Before MRD.create`)
+    api.MergeRequestDiscussions.create(project_id, merge_request_iid, body, options)
+    logger.debug(`After MRD.create`)
+
+    /*
     const FormData = require('form-data');
     const formData = new FormData();
     formData.append("body", body)
@@ -167,6 +182,8 @@ export async function gitlabCreateDiscussion(gitlab_url: string, gitlab_token: s
 
     logger.debug(`OK`)
 
+
+     */
 
     return true
 }
