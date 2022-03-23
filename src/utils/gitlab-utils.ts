@@ -9,7 +9,6 @@ import { DiscussionSchema } from '@gitbeaker/core/dist/types/templates/ResourceD
 import { logger } from "./SIGLogger"
 import axios from "axios"
 import {FileDiffsCriteria} from "azure-devops-node-api/interfaces/GitInterfaces";
-import FormData from "form-data";
 
 export async function gitlabGetProject(gitlab_url: string, gitlab_token: string, project_id: string): Promise<ProjectSchema> {
     const api = new Gitlab({ token: gitlab_token })
@@ -105,7 +104,7 @@ export async function gitlabUpdateNote(gitlab_url: string, gitlab_token: string,
     return true
 }
 export async function gitlabCreateDiscussion(gitlab_url: string, gitlab_token: string, project_id: string, merge_request_iid: number,
-                                       line: number, filename: string, body: string, base_sha?: string, commit_sha?: string): Promise<boolean> {
+                                       line: number, filename: string, body: string, base_sha: string, commit_sha: string): Promise<boolean> {
     const api = new Gitlab({ token: gitlab_token })
 
     logger.debug(`Create new discussion for merge request #${merge_request_iid} in project #${project_id}`)
@@ -132,17 +131,14 @@ export async function gitlabCreateDiscussion(gitlab_url: string, gitlab_token: s
     const FormData = require('form-data');
     const formData = new FormData();
     formData.append("body", body)
-
-    if (base_sha && commit_sha) {
-        formData.append("position[position_type]", "text")
-        formData.append("position[base_sha]", base_sha)
-        formData.append("position[start_sha]", base_sha)
-        //formData.append("position[head_sha]", merge_request.sha)
-        formData.append("position[head_sha]", commit_sha)
-        formData.append("position[new_path]", filename)
-        formData.append("position[old_path]", filename)
-        formData.append("position[new_line]", line.toString())
-    }
+    formData.append("position[position_type]", "text")
+    formData.append("position[base_sha]", base_sha)
+    formData.append("position[start_sha]", base_sha)
+    //formData.append("position[head_sha]", merge_request.sha)
+    formData.append("position[head_sha]", commit_sha)
+    formData.append("position[new_path]", filename)
+    formData.append("position[old_path]", filename)
+    formData.append("position[new_line]", line.toString())
 
     let headers = {
         "PRIVATE-TOKEN": gitlab_token,
@@ -160,18 +156,21 @@ export async function gitlabCreateDiscussion(gitlab_url: string, gitlab_token: s
                 headers: headers
             })
 
-        logger.info(`res=${res.status} res=${res.data}`)
+        logger.info(`res=${res.status} res=${res.data} status=${res.statusText} h=${res.headers}`)
 
         if (res.status > 201) {
             logger.error(`Unable to create discussion for ${filename}:${line} at ${url}`)
+            logger.info(`ERROR`)
             return false
         }
 
     } catch (error: any) {
         // we'll proceed, but let's report it
-        logger.error(`Unable to create discussion for ${filename}:${line} at ${url}: ${error.message}`)
-        return false
+        logger.info(`ERROR: ${error.message}`)
     }
+
+
+    logger.info(`OK`)
 
     return true
 }
