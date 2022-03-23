@@ -9,6 +9,7 @@ import { DiscussionSchema } from '@gitbeaker/core/dist/types/templates/ResourceD
 import { logger } from "./SIGLogger"
 import axios from "axios"
 import {FileDiffsCriteria} from "azure-devops-node-api/interfaces/GitInterfaces";
+import FormData from "form-data";
 
 export async function gitlabGetProject(gitlab_url: string, gitlab_token: string, project_id: string): Promise<ProjectSchema> {
     const api = new Gitlab({ token: gitlab_token })
@@ -104,20 +105,13 @@ export async function gitlabUpdateNote(gitlab_url: string, gitlab_token: string,
     return true
 }
 export async function gitlabCreateDiscussion(gitlab_url: string, gitlab_token: string, project_id: string, merge_request_iid: number,
-                                       line: number, filename: string, body: string, base_sha: string, commit_sha: string): Promise<boolean> {
+                                       line: number, filename: string, body: string, base_sha?: string, commit_sha?: string): Promise<boolean> {
     const api = new Gitlab({ token: gitlab_token })
 
-    logger.debug(`XX Create new discussion for merge request #${merge_request_iid} in project #${project_id}`)
+    logger.debug(`Create new discussion for merge request #${merge_request_iid} in project #${project_id}`)
 
     //let merge_request = await api.MergeRequests.show(project_id, merge_request_iid)
 
-    /*
-    logger.debug(`Getting merge request #${merge_request_iid} in project #${project_id}`)
-    let merge_request = await api.MergeRequests.show(project_id, merge_request_iid)
-    logger.debug(`Merge Request title is ${merge_request.title}`)
-        logger.debug(`mr=${merge_request.title}`)
-
-     */
     // JC: GitBeaker isn't working for this case (filed https://github.com/jdalrymple/gitbeaker/issues/2396)
     // Working around using bare REST query
 
@@ -132,33 +126,30 @@ export async function gitlabCreateDiscussion(gitlab_url: string, gitlab_token: s
     options['position[old_path]'] = filename
     options['position[new_line]'] = line.toString()
 
-    logger.debug(`Before MRD.create`)
     api.MergeRequestDiscussions.create(project_id, merge_request_iid, body, options)
-    logger.debug(`After MRD.create`)
-
     */
+
     const FormData = require('form-data');
     const formData = new FormData();
     formData.append("body", body)
-    formData.append("position[position_type]", "text")
-    formData.append("position[base_sha]", base_sha)
-    formData.append("position[start_sha]", base_sha)
-    //formData.append("position[head_sha]", merge_request.sha)
-    formData.append("position[head_sha]", commit_sha)
-    formData.append("position[new_path]", filename)
-    formData.append("position[old_path]", filename)
-    formData.append("position[new_line]", line.toString())
+
+    if (base_sha && commit_sha) {
+        formData.append("position[position_type]", "text")
+        formData.append("position[base_sha]", base_sha)
+        formData.append("position[start_sha]", base_sha)
+        //formData.append("position[head_sha]", merge_request.sha)
+        formData.append("position[head_sha]", commit_sha)
+        formData.append("position[new_path]", filename)
+        formData.append("position[old_path]", filename)
+        formData.append("position[new_line]", line.toString())
+    }
 
     let headers = {
         "PRIVATE-TOKEN": gitlab_token,
         'content-type': `multipart/form-data; boundary=${formData._boundary}`
     }
 
-    logger.info(`headers=${headers}`)
-
     let url = `${gitlab_url}/api/v4/projects/${project_id}/merge_requests/${merge_request_iid}/discussions`
-
-    logger.info(`url=${url}`)
 
     let res = undefined
     try {
@@ -167,21 +158,16 @@ export async function gitlabCreateDiscussion(gitlab_url: string, gitlab_token: s
                 headers: headers
             })
 
-        logger.info(`res=${res.status} res=${res.data} status=${res.statusText} h=${res.headers}`)
-
         if (res.status > 201) {
             logger.error(`Unable to create discussion for ${filename}:${line} at ${url}`)
-            logger.info(`ERROR`)
             return false
         }
 
     } catch (error: any) {
         // we'll proceed, but let's report it
-        logger.info(`ERROR: ${error.message}`)
+        logger.error(`Unable to create discussion for ${filename}:${line} at ${url}: ${error.message}`)
+        return false
     }
-
-
-    logger.info(`OK`)
 
     return true
 }
