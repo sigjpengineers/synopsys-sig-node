@@ -94,15 +94,13 @@ export async function gitlabGetDiffMap(gitlab_url: string, gitlab_token: string,
 }
 
 export async function gitlabUpdateNote(gitlab_url: string, gitlab_token: string, project_id: string, merge_request_iid: number,
-                                       discussion_id: number, note_id: number, body: string): Promise<boolean> {
+                                       discussion_id: number, note_id: number, body: string): Promise<void> {
     const api = new Gitlab({ token: gitlab_token })
 
     logger.debug(`Update discussion for merge request #${merge_request_iid} in project #${project_id}`)
 
-    let note = await api.MergeRequestDiscussions.editNote(project_id, merge_request_iid, discussion_id, note_id,
+    await api.MergeRequestDiscussions.editNote(project_id, merge_request_iid, discussion_id, note_id,
         { body: body })
-
-    return true
 }
 
 export async function gitlabCreateDiscussionWithoutPosition(gitlab_url: string, gitlab_token: string, project_id: string, merge_request_iid: number,
