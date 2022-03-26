@@ -85,3 +85,17 @@ export {
   COVERITY_PRESENT,
   COVERITY_UNKNOWN_FILE
 } from './utils/coverity-utils'
+export {
+  IBlackduckView,
+  IUpgradeGuidance,
+  IRecommendedVersion,
+  IComponentSearchResult,
+  IComponentVersion,
+  IComponentVulnerability,
+  ICvssView,
+  IRapidScanResults,
+  IRapidScanVulnerability,
+  IRapidScanLicense,
+  BlackduckApiService,
+  cleanUrl,
+} from './utils/blackduck-api'
