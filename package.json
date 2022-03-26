@@ -25,7 +25,9 @@
   "dependencies": {
     "@actions/artifact": "^1.0.0",
     "@actions/core": "^1.6.0",
+    "@actions/exec": "^1.1.1",
     "@actions/github": "^5.0.0",
+    "@actions/tool-cache": "^1.7.2",
     "@gitbeaker/node": "^35.4.0",
     "@octokit/rest": "^18.12.0",
     "axios": "^0.26.1",

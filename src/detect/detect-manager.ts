@@ -1,0 +1,34 @@
+import { find, downloadTool, cacheFile } from '@actions/tool-cache'
+import { exec } from '@actions/exec'
+import path from 'path'
+
+const DETECT_BINARY_REPO_URL = 'https://sig-repo.synopsys.com'
+export const TOOL_NAME = 'detect'
+
+const DETECT_LATEST_VERSION="7.11.1"
+
+export async function findOrDownloadDetect(detect_version: string=DETECT_LATEST_VERSION): Promise<string> {
+  const jarName = `synopsys-detect-${detect_version}.jar`
+
+  const cachedDetect = find(TOOL_NAME, detect_version)
+  if (cachedDetect) {
+    return path.resolve(cachedDetect, jarName)
+  }
+
+  const detectDownloadUrl = createDetectDownloadUrl()
+
+  return (
+    downloadTool(detectDownloadUrl)
+      .then(detectDownloadPath => cacheFile(detectDownloadPath, jarName, TOOL_NAME, detect_version))
+      //TODO: Jarsigner?
+      .then(cachedFolder => path.resolve(cachedFolder, jarName))
+  )
+}
+
+export async function runDetect(detectPath: string, detectArguments: string[]): Promise<number> {
+  return exec(`java`, ['-jar', detectPath].concat(detectArguments), { ignoreReturnCode: true })
+}
+
+function createDetectDownloadUrl(repoUrl = DETECT_BINARY_REPO_URL, detect_version: string = DETECT_LATEST_VERSION): string {
+  return `${repoUrl}/bds-integrations-release/com/synopsys/integration/synopsys-detect/${detect_version}/synopsys-detect-${detect_version}.jar`
+}
