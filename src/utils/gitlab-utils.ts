@@ -9,6 +9,7 @@ import { DiscussionSchema } from '@gitbeaker/core/dist/types/templates/ResourceD
 import { logger } from "./SIGLogger"
 import axios from "axios"
 import {FileDiffsCriteria} from "azure-devops-node-api/interfaces/GitInterfaces";
+import FormData from "form-data";
 
 export async function gitlabGetProject(gitlab_url: string, gitlab_token: string, project_id: string): Promise<ProjectSchema> {
     const api = new Gitlab({ token: gitlab_token })
@@ -103,11 +104,37 @@ export async function gitlabUpdateNote(gitlab_url: string, gitlab_token: string,
 
     return true
 }
+
+export async function gitlabCreateDiscussionWithoutPosition(gitlab_url: string, gitlab_token: string, project_id: string, merge_request_iid: number,
+                                             line: number, filename: string, body: string, file_link: string): Promise<boolean> {
+    const api = new Gitlab({ token: gitlab_token })
+
+    logger.debug(`XX Create new discussion for merge request #${merge_request_iid} in project #${project_id}`)
+
+    await api.MergeRequestDiscussions.create(project_id, merge_request_iid, body)
+
+    return true
+}
+
 export async function gitlabCreateDiscussion(gitlab_url: string, gitlab_token: string, project_id: string, merge_request_iid: number,
                                        line: number, filename: string, body: string, base_sha: string, commit_sha: string): Promise<boolean> {
     const api = new Gitlab({ token: gitlab_token })
 
     logger.debug(`XX Create new discussion for merge request #${merge_request_iid} in project #${project_id}`)
+
+    await api.MergeRequestDiscussions.create(project_id, merge_request_iid, body, {
+        position: {
+            positionType: "text",
+            baseSha: base_sha,
+            headSha: commit_sha,
+            startSha: base_sha,
+            newPath: filename,
+            oldPath: filename,
+            newLine: line.toString()
+        }
+    })
+
+    return true
 
     //let merge_request = await api.MergeRequests.show(project_id, merge_request_iid)
 
@@ -130,6 +157,8 @@ export async function gitlabCreateDiscussion(gitlab_url: string, gitlab_token: s
     logger.debug(`After MRD.create`)
 
     */
+
+    /*
     const FormData = require('form-data');
     const formData = new FormData();
     formData.append("body", body)
@@ -177,4 +206,5 @@ export async function gitlabCreateDiscussion(gitlab_url: string, gitlab_token: s
     logger.info(`OK`)
 
     return true
+    */
 }

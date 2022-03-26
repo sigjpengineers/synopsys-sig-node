@@ -53,14 +53,14 @@ ${remediationString}
 `
 }
 
-export function coverityCreateIssueCommentMessage(issue: CoverityIssueOccurrence): string {
+export function coverityCreateIssueCommentMessage(issue: CoverityIssueOccurrence, file_link: string): string {
     const message = coverityCreateReviewCommentMessage(issue)
     const relativePath = relatavize_path(process.cwd(), issue.strippedMainEventFilePathname)
 
     return `${message}
 ## Issue location
 This issue was discovered outside the diff for this Pull Request. You can find it at:
-[${relativePath}:${issue.mainEventLineNumber}](${process.env.GITHUB_SERVER_URL}/${process.env.GITHUB_REPOSITORY}/blob/${process.env.GITHUB_SHA}/${relativePath}#L${issue.mainEventLineNumber})
+[${relativePath}:${issue.mainEventLineNumber}](${file_link})
 `
 }
 
