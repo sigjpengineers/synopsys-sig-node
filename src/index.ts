@@ -98,3 +98,6 @@ export {
   IRapidScanLicense,
   BlackduckApiService
 } from './utils/blackduck-api'
+export {
+  findOrDownloadDetect
+} from './detect/detect-manager'
