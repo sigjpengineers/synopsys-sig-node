@@ -97,5 +97,5 @@ export {
   IRapidScanVulnerability,
   IRapidScanLicense,
   BlackduckApiService,
-  cleanUrl,
+  cleanUrl
 } from './utils/blackduck-api'
