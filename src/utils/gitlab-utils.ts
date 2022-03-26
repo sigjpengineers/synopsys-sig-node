@@ -103,11 +103,12 @@ export async function gitlabUpdateNote(gitlab_url: string, gitlab_token: string,
     await api.MergeRequestDiscussions.editNote(project_id, merge_request_iid, discussion_id, note_id, { body: body })
 }
 
-export async function gitlabCreateDiscussionWithoutPosition(gitlab_url: string, gitlab_token: string, project_id: string, merge_request_iid: number,
-                                             line: number, filename: string, body: string): Promise<void> {
+export async function gitlabCreateDiscussionWithoutPosition(gitlab_url: string, gitlab_token: string,
+                                                            project_id: string, merge_request_iid: number,
+                                                            body: string): Promise<void> {
     const api = new Gitlab({ token: gitlab_token })
 
-    logger.debug(`XX Create new discussion for merge request #${merge_request_iid} in project #${project_id}`)
+    logger.debug(`Create new discussion for merge request #${merge_request_iid} in project #${project_id}`)
 
     await api.MergeRequestDiscussions.create(project_id, merge_request_iid, body)
 }

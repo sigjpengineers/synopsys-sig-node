@@ -1,6 +1,7 @@
 import {ExistingIssueComment, ExistingReviewComment, NewReviewComment, PullRequest} from '../_namespaces/github'
 import {context, getOctokit} from '@actions/github'
 import {DiffMap} from "./diffmap";
+import {logger} from "./SIGLogger";
 
 const prEvents = ['pull_request', 'pull_request_review', 'pull_request_review_comment']
 
@@ -186,4 +187,42 @@ export function githubGetDiffMap(rawDiff: string): DiffMap {
     }
 
     return diffMap
+}
+
+export async function githubCommentOnPR(github_token: string, comment_preface: string, report: string): Promise<void> {
+    const octokit = getOctokit(github_token)
+
+    const message = comment_preface.concat('\r\n', report)
+
+    const contextIssue = context.issue.number
+    const contextOwner = context.repo.owner
+    const contextRepo = context.repo.repo
+
+    logger.debug('Gathering existing comments...')
+    const { data: existingComments } = await octokit.rest.issues.listComments({
+        issue_number: contextIssue,
+        owner: contextOwner,
+        repo: contextRepo
+    })
+
+    for (const comment of existingComments) {
+        const firstLine = comment.body?.split('\r\n')[0]
+        if (firstLine === comment_preface) {
+            logger.debug(`Existing comment found. Attempting to delete it...`)
+            octokit.rest.issues.deleteComment({
+                comment_id: comment.id,
+                owner: contextOwner,
+                repo: contextRepo
+            })
+        }
+    }
+
+    logger.debug('Creating a new comment...')
+    octokit.rest.issues.createComment({
+        issue_number: contextIssue,
+        owner: contextOwner,
+        repo: contextRepo,
+        body: message
+    })
+    logger.debug('Successfully created a new comment!')
 }
