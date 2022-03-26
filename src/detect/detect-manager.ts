@@ -54,8 +54,19 @@ export async function findOrDownloadDetect(download_dir: string, verbose: boolea
 }
 
 
-export async function runDetect(detectPath: string, detectArguments: string[]): Promise<number> {
+export async function githubRunDetect(detectPath: string, detectArguments: string[]): Promise<number> {
   return exec(`java`, ['-jar', detectPath].concat(detectArguments), { ignoreReturnCode: true })
+}
+
+export async function runDetect(detectPath: string, detectArguments: string[]): Promise<number> {
+  const JavaCaller = require('java-caller');
+  const JAVA_CALLER_OPTIONS = {
+    jar: detectPath
+  }
+  const java = new JavaCaller(JAVA_CALLER_OPTIONS)
+  const {status, stdout, stderr} = java.run(detectArguments)
+
+  return status
 }
 
 export function createDetectDownloadUrl(repoUrl = DETECT_BINARY_REPO_URL, detect_version: string = DETECT_LATEST_VERSION): string {
