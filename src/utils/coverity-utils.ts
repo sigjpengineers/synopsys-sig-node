@@ -55,7 +55,9 @@ ${remediationString}
 
 export function coverityCreateIssueCommentMessage(issue: CoverityIssueOccurrence, file_link: string): string {
     const message = coverityCreateReviewCommentMessage(issue)
-    const relativePath = relatavize_path(process.cwd(), issue.strippedMainEventFilePathname)
+    const relativePath = issue.strippedMainEventFilePathname.startsWith('/') ?
+        relatavize_path(process.cwd(), issue.strippedMainEventFilePathname) :
+        issue.strippedMainEventFilePathname
 
     return `${message}
 ## Issue location
