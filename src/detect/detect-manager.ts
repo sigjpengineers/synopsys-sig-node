@@ -45,7 +45,7 @@ export async function findOrDownloadDetect(download_dir: string, detect_version:
   try {
     await downloader.download();
   } catch (error) {
-    logger.error(`Unable to download file: ${error.message}`)
+    logger.error(`Unable to download file: ${error}`)
   }
 
   return(path.resolve(download_dir, jarName))
