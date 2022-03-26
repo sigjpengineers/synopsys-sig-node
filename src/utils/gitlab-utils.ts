@@ -106,35 +106,33 @@ export async function gitlabUpdateNote(gitlab_url: string, gitlab_token: string,
 }
 
 export async function gitlabCreateDiscussionWithoutPosition(gitlab_url: string, gitlab_token: string, project_id: string, merge_request_iid: number,
-                                             line: number, filename: string, body: string): Promise<boolean> {
+                                             line: number, filename: string, body: string): Promise<void> {
     const api = new Gitlab({ token: gitlab_token })
 
     logger.debug(`XX Create new discussion for merge request #${merge_request_iid} in project #${project_id}`)
 
     await api.MergeRequestDiscussions.create(project_id, merge_request_iid, body)
-
-    return true
 }
 
 export async function gitlabCreateDiscussion(gitlab_url: string, gitlab_token: string, project_id: string, merge_request_iid: number,
-                                       line: number, filename: string, body: string, base_sha: string, commit_sha: string): Promise<boolean> {
+                                       line: number, filename: string, body: string, base_sha: string, commit_sha: string): Promise<void> {
     const api = new Gitlab({ token: gitlab_token })
+
+    let merge_request = await api.MergeRequests.show(project_id, merge_request_iid)
 
     logger.debug(`XX Create new discussion for merge request #${merge_request_iid} in project #${project_id}`)
 
     await api.MergeRequestDiscussions.create(project_id, merge_request_iid, body, {
         position: {
-            positionType: "text",
-            baseSha: base_sha,
-            headSha: commit_sha,
-            startSha: base_sha,
-            newPath: filename,
-            oldPath: filename,
-            newLine: line.toString()
+            position_type: "text",
+            base_sha: base_sha,
+            head_sha: merge_request.sha,
+            start_sha: base_sha,
+            new_path: filename,
+            old_path: filename,
+            new_line: line.toString()
         }
     })
-
-    return true
 
     //let merge_request = await api.MergeRequests.show(project_id, merge_request_iid)
 
