@@ -106,7 +106,7 @@ export async function gitlabUpdateNote(gitlab_url: string, gitlab_token: string,
 }
 
 export async function gitlabCreateDiscussionWithoutPosition(gitlab_url: string, gitlab_token: string, project_id: string, merge_request_iid: number,
-                                             line: number, filename: string, body: string, file_link: string): Promise<boolean> {
+                                             line: number, filename: string, body: string): Promise<boolean> {
     const api = new Gitlab({ token: gitlab_token })
 
     logger.debug(`XX Create new discussion for merge request #${merge_request_iid} in project #${project_id}`)
