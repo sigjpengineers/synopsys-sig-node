@@ -101,3 +101,17 @@ export {
 export {
   findOrDownloadDetect
 } from './detect/detect-manager'
+export {
+  createRapidScanReportString,
+  createRapidScanReport,
+  IComponentReport,
+  createComponentReport,
+  createComponentLicenseReports,
+  createComponentVulnerabilityReports,
+  ILicenseReport,
+  createLicenseReport,
+  IVulnerabilityReport,
+  createVulnerabilityReport,
+  IUpgradeReport,
+  createUpgradeReport
+} from './utils/blackduck-utils'

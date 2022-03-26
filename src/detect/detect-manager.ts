@@ -26,7 +26,7 @@ export async function githubFindOrDownloadDetect(detect_version: string=DETECT_L
   )
 }
 
-export async function findOrDownloadDetect(download_dir: string, detect_version: string=DETECT_LATEST_VERSION): Promise<string> {
+export async function findOrDownloadDetect(download_dir: string, verbose: boolean=false, detect_version: string=DETECT_LATEST_VERSION): Promise<string> {
   const jarName = `synopsys-detect-${detect_version}.jar`
 
   const detectDownloadUrl = createDetectDownloadUrl()
@@ -38,7 +38,9 @@ export async function findOrDownloadDetect(download_dir: string, detect_version:
     url: detectDownloadUrl,
     directory: download_dir,
     onProgress: function (percentage: any, chunk: any, remainingSize: any) {
-      logger.info(`%${percentage} ${remainingSize} bytes remaining`)
+      if (verbose) {
+        logger.info(`%${percentage} ${remainingSize} bytes remaining`)
+      }
     },
   });
 
