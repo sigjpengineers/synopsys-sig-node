@@ -21,7 +21,7 @@ ${existingMessageLines[1]}
 ${COVERITY_NOT_PRESENT}
 -->
 
-Coverity issue no longer present as of: ${process.env.GITHUB_SHA}
+Coverity issue no longer present as of: ${process.env.CI_COMMIT_SHA}
 <details>
 <summary>Show issue</summary>
 
