@@ -3,6 +3,7 @@ import { IHeaders } from 'typed-rest-client/Interfaces'
 import { BearerCredentialHandler } from 'typed-rest-client/Handlers'
 import { HttpClient } from 'typed-rest-client/HttpClient'
 import { IRestResponse, RestClient } from 'typed-rest-client/RestClient'
+import {logger} from "./SIGLogger";
 
 const APPLICATION_NAME = "Synopsys SIG Library for Node.js"
 
@@ -94,7 +95,7 @@ export class BlackduckApiService {
   }
 
   async getBearerToken(): Promise<string> {
-    info('Initiating authentication request to Black Duck...')
+    logger.info('Initiating authentication request to Black Duck...')
     const authenticationClient = new HttpClient(APPLICATION_NAME)
     const authorizationHeader: IHeaders = { Authorization: `token ${this.blackduckApiToken}` }
 
@@ -103,23 +104,23 @@ export class BlackduckApiService {
       .then(authenticationResponse => authenticationResponse.readBody())
       .then(responseBody => JSON.parse(responseBody))
       .then(responseBodyJson => {
-        info('Successfully authenticated with Black Duck')
+        logger.info('Successfully authenticated with Black Duck')
         return responseBodyJson.bearerToken
       })
   }
 
   async checkIfEnabledBlackduckPoliciesExist(bearerToken: string): Promise<boolean> {
-    debug('Requesting policies from Black Duck...')
+    logger.debug('Requesting policies from Black Duck...')
     return this.getPolicies(bearerToken, 1, true).then(blackduckPolicyPage => {
       const policyCount = blackduckPolicyPage?.result?.totalCount
       if (policyCount === undefined || policyCount === null) {
-        warning('Failed to check Black Duck for policies')
+        logger.warn('Failed to check Black Duck for policies')
         return false
       } else if (policyCount > 0) {
-        debug(`${policyCount} Black Duck policies existed`)
+        logger.debug(`${policyCount} Black Duck policies existed`)
         return true
       } else {
-        info('No Black Duck policies exist')
+        logger.info('No Black Duck policies exist')
         return false
       }
     })
