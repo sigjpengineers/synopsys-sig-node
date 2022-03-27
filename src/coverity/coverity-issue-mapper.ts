@@ -2,7 +2,7 @@ import {CoverityApiService,
     ICoverityResponseCell,
     KEY_ACTION, KEY_CID, KEY_CLASSIFICATION, KEY_FIRST_SNAPSHOT_ID, KEY_LAST_SNAPSHOT_ID, KEY_MERGE_KEY
 } from './coverity-api'
-import {logger} from "./SIGLogger";
+import {logger} from "../SIGLogger";
 
 const PAGE_SIZE = 500
 

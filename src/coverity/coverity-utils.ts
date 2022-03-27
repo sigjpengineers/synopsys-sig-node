@@ -1,8 +1,7 @@
 import {CoverityIssueOccurrence} from "../models/coverity-json-v7-schema";
-import {logger} from "./SIGLogger";
-import {githubRelativizePath} from "./github-utils";
-import {DiffMap} from "./diffmap";
-import {relatavize_path} from "./misc-utils";
+import {logger} from "../SIGLogger";
+import {DiffMap} from "../diffmap";
+import {relatavize_path} from "../path";
 
 export const COVERITY_PRESENT = 'PRESENT'
 export const COVERITY_NOT_PRESENT = 'NOT_PRESENT'
@@ -34,9 +33,9 @@ export function coverityCreateReviewCommentMessage(issue: CoverityIssueOccurrenc
     const checkerNameString = issue.checkerProperties ? `\r\n_${issue.checkerName}_` : ''
     const impactString = issue.checkerProperties ? issue.checkerProperties.impact : 'Unknown'
     const cweString = issue.checkerProperties ? `, CWE-${issue.checkerProperties.cweCategory}` : ''
-    const mainEvent = issue.events.find(event => event.main === true)
+    const mainEvent = issue.events.find(event => event.main)
     const mainEventDescription = mainEvent ? mainEvent.eventDescription : ''
-    const remediationEvent = issue.events.find(event => event.remediation === true)
+    const remediationEvent = issue.events.find(event => event.remediation)
     const remediationString = remediationEvent ? `## How to fix\r\n ${remediationEvent.eventDescription}` : ''
 
     return `${COVERITY_COMMENT_PREFACE}

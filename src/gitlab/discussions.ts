@@ -1,27 +1,6 @@
-import {Gitlab, MergeRequestDiscussions} from '@gitbeaker/node'
-import { Types } from '@gitbeaker/core'
-import { ProjectSchema } from '@gitbeaker/core/dist/types/resources/Projects'
-import { BaseRequestOptions } from '@gitbeaker/core/dist/types/types'
-import { CommitDiffSchema } from '@gitbeaker/core/dist/types/resources/Commits'
-import { DiscussionNotePosition } from '@gitbeaker/core/dist/types/templates/ResourceDiscussions'
-import { DiscussionSchema } from '@gitbeaker/core/dist/types/templates/ResourceDiscussions'
-
-import { logger } from "./SIGLogger"
-import axios from "axios"
-import {FileDiffsCriteria} from "azure-devops-node-api/interfaces/GitInterfaces";
-import FormData from "form-data";
-
-export async function gitlabGetProject(gitlab_url: string, gitlab_token: string, project_id: string): Promise<ProjectSchema> {
-    const api = new Gitlab({ token: gitlab_token })
-
-    logger.debug(`Getting project ${project_id}`)
-
-    let project = await api.Projects.show(project_id)
-
-    logger.debug(`Project name is ${project.name}`)
-
-    return project
-}
+import {DiscussionSchema} from "@gitbeaker/core/dist/types/templates/ResourceDiscussions";
+import {Gitlab} from "@gitbeaker/node";
+import {logger} from "../SIGLogger";
 
 export async function gitlabGetDiscussions(gitlab_url: string, gitlab_token: string, project_id: string, merge_request_iid: number): Promise<DiscussionSchema[]> {
     const api = new Gitlab({ token: gitlab_token })
@@ -48,50 +27,7 @@ export async function gitlabGetDiscussions(gitlab_url: string, gitlab_token: str
     return discussions
 }
 
-export async function gitlabGetDiffMap(gitlab_url: string, gitlab_token: string, project_id: string, merge_request_iid: number): Promise<Map<any, any>> {
-    const api = new Gitlab({ token: gitlab_token })
 
-    logger.debug(`Getting commits for merge request #${merge_request_iid} in project #${project_id}`)
-    let commits = await api.MergeRequests.commits(project_id, merge_request_iid)
-
-    const diffMap = new Map()
-
-    for (const commit of commits) {
-        logger.debug(`Commit #${commit.id}: ${commit.title}`)
-        let diffs = await api.Commits.diff(project_id, commit.id)
-        for (const diff of diffs) {
-            logger.debug(`  Diff file: ${diff.new_path} diff: ${diff.diff}`)
-
-            const path = diff.new_path
-            diffMap.set(path, [])
-
-            const diff_text = diff.diff
-            if (diff_text.startsWith('@@')) {
-                let changedLines = diff_text.substring(3)
-                changedLines = changedLines.substring(0, changedLines.indexOf(' @@'))
-
-                const linesAddedPosition = changedLines.indexOf('+')
-                if (linesAddedPosition > -1) {
-                    // We only care about the right side because SI can only analyze what's there, not what used to be
-                    const linesAddedString = changedLines.substring(linesAddedPosition + 1)
-                    const separatorPosition = linesAddedString.indexOf(',')
-
-                    const startLine = parseInt(linesAddedString.substring(0, separatorPosition))
-                    const lineCount = parseInt(linesAddedString.substring(separatorPosition + 1))
-                    const endLine = startLine + lineCount - 1
-
-                    if (!diffMap.has(path)) {
-                        diffMap.set(path, [])
-                    }
-                    logger.debug(`Added ${path}: ${startLine} to ${endLine}`)
-                    diffMap.get(path)?.push({firstLine: startLine, lastLine: endLine, sha: commit.id})
-                }
-            }
-        }
-    }
-
-    return diffMap
-}
 
 export async function gitlabUpdateNote(gitlab_url: string, gitlab_token: string, project_id: string, merge_request_iid: number,
                                        discussion_id: number, note_id: number, body: string): Promise<void> {
@@ -114,7 +50,7 @@ export async function gitlabCreateDiscussionWithoutPosition(gitlab_url: string, 
 }
 
 export async function gitlabCreateDiscussion(gitlab_url: string, gitlab_token: string, project_id: string, merge_request_iid: number,
-                                       line: number, filename: string, body: string, base_sha: string, commit_sha: string): Promise<void> {
+                                             line: number, filename: string, body: string, base_sha: string, commit_sha: string): Promise<void> {
     const api = new Gitlab({ token: gitlab_token })
 
     let merge_request = await api.MergeRequests.show(project_id, merge_request_iid)

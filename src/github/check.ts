@@ -1,13 +1,14 @@
 import { debug, info, warning } from '@actions/core'
 import { context, getOctokit } from '@actions/github'
-import { getSha } from './github-context'
+import {logger} from "../SIGLogger"
+import {githubGetSha} from "./github-context";
 
 export async function createCheck(checkName: string, githubToken: string): Promise<GitHubCheck> {
   const octokit = getOctokit(githubToken)
 
-  const head_sha = getSha()
+  const head_sha = githubGetSha()
 
-  info(`Creating ${checkName}...`)
+  logger.info(`Creating ${checkName}...`)
   const response = await octokit.rest.checks.create({
     owner: context.repo.owner,
     repo: context.repo.repo,
@@ -16,10 +17,10 @@ export async function createCheck(checkName: string, githubToken: string): Promi
   })
 
   if (response.status !== 201) {
-    warning(`Unexpected status code recieved when creating ${checkName}: ${response.status}`)
-    debug(JSON.stringify(response, null, 2))
+    logger.warn(`Unexpected status code recieved when creating ${checkName}: ${response.status}`)
+    logger.debug(JSON.stringify(response, null, 2))
   } else {
-    info(`${checkName} created`)
+    logger.info(`${checkName} created`)
   }
 
   return new GitHubCheck(checkName, response.data.id, githubToken)

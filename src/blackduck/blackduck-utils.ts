@@ -5,7 +5,7 @@ import {
     IRapidScanResults, IRapidScanVulnerability, IRecommendedVersion,
     IUpgradeGuidance
 } from "./blackduck-api";
-import {logger} from "./SIGLogger";
+import {logger} from "../SIGLogger";
 
 export const TABLE_HEADER = '| Policies Violated | Dependency | License(s) | Vulnerabilities | Short Term Recommended Upgrade | Long Term Recommended Upgrade |\r\n' + '|-|-|-|-|-|-|\r\n'
 

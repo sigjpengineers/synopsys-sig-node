@@ -1,9 +1,8 @@
-import { debug, info, warning } from '@actions/core'
 import { IHeaders } from 'typed-rest-client/Interfaces'
 import { BearerCredentialHandler } from 'typed-rest-client/Handlers'
 import { HttpClient } from 'typed-rest-client/HttpClient'
 import { IRestResponse, RestClient } from 'typed-rest-client/RestClient'
-import {logger} from "./SIGLogger";
+import {logger} from "../SIGLogger";
 
 const APPLICATION_NAME = "Synopsys SIG Library for Node.js"
 

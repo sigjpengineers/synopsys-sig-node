@@ -1,6 +1,6 @@
 import {SigmaIssueOccurrence} from "../models/sigma-schema"
-import {DiffMap} from "./diffmap"
-import {logger} from "./SIGLogger"
+import {DiffMap} from "../diffmap"
+import {logger} from "../SIGLogger"
 import * as fs from "fs"
 
 export const SIGMA_COMMENT_PREFACE = '<!-- Comment managed by Synopsys, do not modify! -->'

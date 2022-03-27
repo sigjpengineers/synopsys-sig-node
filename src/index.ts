@@ -1,3 +1,121 @@
+// Azure
+export {
+  azGetDiffMap
+} from './azure/azure-diffmap'
+export {
+  azGetExistingReviewThreads,
+  azUpdateComment,
+  azCreateReviewComment,
+}  from './azure/review'
+// GitHub
+export {
+  githubIsPullRequest,
+  githubGetSha,
+  githubGetPullRequestNumber,
+  githubRelativizePath
+} from './github/github-context'
+export {
+  githubGetDiffMap
+} from './github/github-diffmap'
+export {
+  githubGetPullRequestDiff
+} from './github/pull-request'
+export {
+  createCheck,
+  GitHubCheck
+} from './github/check'
+export {
+  uploadArtifact
+} from './github/upload-artifacts'
+export {
+  githubGetExistingReviewComments,
+  githubUpdateExistingReviewComment,
+  githubCreateReview,
+  githubGetExistingIssueComments,
+  githubUpdateExistingIssueComment,
+  githubCreateIssueComment,
+} from './github/comment'
+// GitLab
+export {
+  gitlabGetDiffMap
+} from './gitlab/gitlab-diffmap'
+export {
+  gitlabGetDiscussions,
+  gitlabUpdateNote,
+  gitlabCreateDiscussion,
+} from './gitlab/discussions'
+export {
+  gitlabGetProject,
+} from './gitlab/gitlab-utils'
+// Black Duck
+export {
+  IBlackduckView,
+  IUpgradeGuidance,
+  IRecommendedVersion,
+  IComponentSearchResult,
+  IComponentVersion,
+  IComponentVulnerability,
+  ICvssView,
+  IRapidScanResults,
+  IRapidScanVulnerability,
+  IRapidScanLicense,
+  BlackduckApiService
+} from './blackduck/blackduck-api'
+export {
+  findOrDownloadDetect,
+  runDetect
+} from './blackduck/detect/detect-manager'
+export {
+  createRapidScanReportString,
+  createRapidScanReport,
+  IComponentReport,
+  createComponentReport,
+  createComponentLicenseReports,
+  createComponentVulnerabilityReports,
+  ILicenseReport,
+  createLicenseReport,
+  IVulnerabilityReport,
+  createVulnerabilityReport,
+  IUpgradeReport,
+  createUpgradeReport
+} from './blackduck/blackduck-utils'
+// Coverity
+export {
+  CoverityIssuesView,
+  CoverityIssueOccurrence,
+  CoverityEvent,
+  CoverityCheckerProperties,
+  CoverityStateOnServer,
+  CoverityTriage,
+  CoverityCustomTriage,
+  CoverityError,
+  CoverityDesktopAnalysisSettings,
+  CoverityReferenceSnapshotDetails,
+  CoverityPortableAnalysisSettings,
+  CoverityFileCheckerOption
+} from './models/coverity-json-v7-schema'
+export {
+  ICoverityIssuesSearchResponse,
+  ICoverityResponseCell,
+  CoverityApiService,
+  cleanUrl
+} from './coverity/coverity-api'
+export {
+  CoverityProjectIssue,
+  coverityMapMatchingMergeKeys
+} from './coverity/coverity-issue-mapper'
+export {
+  coverityIsPresent,
+  coverityCreateNoLongerPresentMessage,
+  coverityCreateReviewCommentMessage,
+  coverityCreateIssueCommentMessage,
+  coverityIsInDiff,
+  COVERITY_COMMENT_PREFACE,
+  COVERITY_NOT_PRESENT,
+  COVERITY_PRESENT,
+  COVERITY_UNKNOWN_FILE
+} from './coverity/coverity-utils'
+// Sigma
 export {
   SigmaIssuesView,
   SigmaIssueWrapper,
@@ -13,105 +131,14 @@ export {
   CustomTriage
 } from './models/sigma-schema'
 export {
-  CoverityIssuesView,
-  CoverityIssueOccurrence,
-  CoverityEvent,
-  CoverityCheckerProperties,
-  CoverityStateOnServer,
-  CoverityTriage,
-  CoverityCustomTriage,
-  CoverityError,
-  CoverityDesktopAnalysisSettings,
-  CoverityReferenceSnapshotDetails,
-  CoverityPortableAnalysisSettings,
-  CoverityFileCheckerOption
-} from './models/coverity-json-v7-schema'
-export { logger } from './utils/SIGLogger'
-export {
-  gitlabGetProject,
-  gitlabGetDiscussions,
-  gitlabGetDiffMap,
-  gitlabUpdateNote,
-  gitlabCreateDiscussion,
-} from './utils/gitlab-utils'
-export {
   SIGMA_COMMENT_PREFACE,
   sigmaIsInDiff,
   sigmaUuidCommentOf,
   sigmaCreateMessageFromIssue
-} from './utils/sigma-utils'
-export {
-  azGetExistingReviewThreads,
-  azUpdateComment,
-  azCreateReviewComment,
-  azGetDiffMap,
-} from './utils/azure-utils'
+} from './sigma/sigma-utils'
+export { logger } from './SIGLogger'
 export {
   DiffMap,
   Hunk
-} from './utils/diffmap'
-export {
-  githubIsPullRequest,
-  githubGetSha,
-  githubGetPullRequestNumber,
-  githubRelativizePath,
-  githubGetPullRequestDiff,
-  githubGetExistingReviewComments,
-  githubUpdateExistingReviewComment,
-  githubCreateReview,
-  githubGetExistingIssueComments,
-  githubUpdateExistingIssueComment,
-  githubCreateIssueComment,
-  githubGetDiffMap
-} from './utils/github-utils'
-export {
-  ICoverityIssuesSearchResponse,
-  ICoverityResponseCell,
-  CoverityApiService,
-  cleanUrl
-} from './utils/coverity-api'
-export {
-  CoverityProjectIssue,
-  coverityMapMatchingMergeKeys
-} from './utils/coverity-issue-mapper'
-export {
-  coverityIsPresent,
-  coverityCreateNoLongerPresentMessage,
-  coverityCreateReviewCommentMessage,
-  coverityCreateIssueCommentMessage,
-  coverityIsInDiff,
-  COVERITY_COMMENT_PREFACE,
-  COVERITY_NOT_PRESENT,
-  COVERITY_PRESENT,
-  COVERITY_UNKNOWN_FILE
-} from './utils/coverity-utils'
-export {
-  IBlackduckView,
-  IUpgradeGuidance,
-  IRecommendedVersion,
-  IComponentSearchResult,
-  IComponentVersion,
-  IComponentVulnerability,
-  ICvssView,
-  IRapidScanResults,
-  IRapidScanVulnerability,
-  IRapidScanLicense,
-  BlackduckApiService
-} from './utils/blackduck-api'
-export {
-  findOrDownloadDetect
-} from './detect/detect-manager'
-export {
-  createRapidScanReportString,
-  createRapidScanReport,
-  IComponentReport,
-  createComponentReport,
-  createComponentLicenseReports,
-  createComponentVulnerabilityReports,
-  ILicenseReport,
-  createLicenseReport,
-  IVulnerabilityReport,
-  createVulnerabilityReport,
-  IUpgradeReport,
-  createUpgradeReport
-} from './utils/blackduck-utils'
+} from './diffmap'
+
