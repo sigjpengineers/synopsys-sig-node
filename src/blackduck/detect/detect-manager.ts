@@ -1,5 +1,6 @@
 import path from 'path'
 import {logger} from "../../SIGLogger";
+import {exec} from "@actions/exec"
 
 const DETECT_BINARY_REPO_URL = 'https://sig-repo.synopsys.com'
 export const TOOL_NAME = 'detect'
@@ -61,21 +62,8 @@ export async function githubRunDetect(detectPath: string, detectArguments: strin
 */
 
 export async function runDetect(detectPath: string, detectArguments: string[]): Promise<number> {
-  logger.info(`Step 1`)
-  const JavaCaller = require('java-caller').JavaCaller
-  logger.info(`Step 2`)
-
-  const JAVA_CALLER_OPTIONS = {
-    jar: detectPath
-  }
-  logger.info(`Step 3`)
-
-  const java = new JavaCaller(JAVA_CALLER_OPTIONS)
-  logger.info(`Step 4`)
-
-  const {status, stdout, stderr} = java.run(detectArguments)
-
-  return status
+  // NOTE: Uses GitHub Actions interface to exec
+  return exec(`java`, ['-jar', detectPath].concat(detectArguments), { ignoreReturnCode: true })
 }
 
 export function createDetectDownloadUrl(repoUrl = DETECT_BINARY_REPO_URL, detect_version: string = DETECT_LATEST_VERSION): string {
