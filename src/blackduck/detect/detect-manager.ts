@@ -1,4 +1,4 @@
-import path from 'src/paths'
+import path from 'path'
 import {logger} from "../../SIGLogger";
 import {exec} from "@actions/exec"
 
