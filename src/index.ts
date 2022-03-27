@@ -142,4 +142,7 @@ export {
   DiffMap,
   Hunk
 } from './diffmap'
+export {
+  relatavize_path
+} from './paths'
 

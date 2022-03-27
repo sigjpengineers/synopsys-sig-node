@@ -1,7 +1,7 @@
 import {CoverityIssueOccurrence} from "../models/coverity-json-v7-schema";
 import {logger} from "../SIGLogger";
 import {DiffMap} from "../diffmap";
-import {relatavize_path} from "../path";
+import {relatavize_path} from "../paths";
 
 export const COVERITY_PRESENT = 'PRESENT'
 export const COVERITY_NOT_PRESENT = 'NOT_PRESENT'
