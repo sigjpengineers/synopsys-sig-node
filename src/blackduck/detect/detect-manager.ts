@@ -31,7 +31,7 @@ export async function findOrDownloadDetect(download_dir: string, verbose: boolea
 
   const detectDownloadUrl = createDetectDownloadUrl()
 
-  const Downloader = require("nodejs-file-downloader");
+  const Downloader = require("nodejs-file-downloader").Downloader
 
   logger.info(`Downloading ${detectDownloadUrl}`)
   const downloader = new Downloader({
