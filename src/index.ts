@@ -43,6 +43,7 @@ export {
   gitlabGetDiscussions,
   gitlabUpdateNote,
   gitlabCreateDiscussion,
+  gitlabCreateDiscussionWithoutPosition
 } from './gitlab/discussions'
 export {
   gitlabGetProject,
