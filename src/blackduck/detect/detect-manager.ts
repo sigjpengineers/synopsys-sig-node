@@ -62,7 +62,7 @@ export async function githubRunDetect(detectPath: string, detectArguments: strin
 
 export async function runDetect(detectPath: string, detectArguments: string[]): Promise<number> {
   logger.info(`Step 1`)
-  const JavaCaller = require('java-caller');
+  const JavaCaller = require('java-caller').JavaCaller
   logger.info(`Step 2`)
 
   const JAVA_CALLER_OPTIONS = {
