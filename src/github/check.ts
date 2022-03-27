@@ -3,7 +3,7 @@ import { context, getOctokit } from '@actions/github'
 import {logger} from "../SIGLogger"
 import {githubGetSha} from "./github-context";
 
-export async function createCheck(checkName: string, githubToken: string): Promise<GitHubCheck> {
+export async function githubCreateCheck(checkName: string, githubToken: string): Promise<GitHubCheck> {
   const octokit = getOctokit(githubToken)
 
   const head_sha = githubGetSha()

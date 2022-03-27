@@ -21,7 +21,7 @@ export {
   githubGetPullRequestDiff
 } from './github/pull-request'
 export {
-  createCheck,
+  githubCreateCheck,
   GitHubCheck
 } from './github/check'
 export {
@@ -63,7 +63,9 @@ export {
   BlackduckApiService
 } from './blackduck/blackduck-api'
 export {
+  githubFindOrDownloadDetect,
   findOrDownloadDetect,
+  githubRunDetect,
   runDetect
 } from './blackduck/detect/detect-manager'
 export {

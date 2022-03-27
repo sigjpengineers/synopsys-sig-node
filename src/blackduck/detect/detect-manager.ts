@@ -1,13 +1,13 @@
 import path from 'path'
 import {logger} from "../../SIGLogger";
 import {exec} from "@actions/exec"
+import {cacheFile, downloadTool, find} from "@actions/tool-cache";
 
 const DETECT_BINARY_REPO_URL = 'https://sig-repo.synopsys.com'
 export const TOOL_NAME = 'detect'
 
 const DETECT_LATEST_VERSION="7.11.1"
 
-/*
 export async function githubFindOrDownloadDetect(detect_version: string=DETECT_LATEST_VERSION): Promise<string> {
   const jarName = `synopsys-detect-${detect_version}.jar`
 
@@ -25,7 +25,6 @@ export async function githubFindOrDownloadDetect(detect_version: string=DETECT_L
       .then(cachedFolder => path.resolve(cachedFolder, jarName))
   )
 }
- */
 
 export async function findOrDownloadDetect(download_dir: string, verbose: boolean=false, detect_version: string=DETECT_LATEST_VERSION): Promise<string> {
   const jarName = `synopsys-detect-${detect_version}.jar`
@@ -54,12 +53,9 @@ export async function findOrDownloadDetect(download_dir: string, verbose: boolea
   return(path.resolve(download_dir, jarName))
 }
 
-
-/*
 export async function githubRunDetect(detectPath: string, detectArguments: string[]): Promise<number> {
   return exec(`java`, ['-jar', detectPath].concat(detectArguments), { ignoreReturnCode: true })
 }
-*/
 
 export async function runDetect(detectPath: string, detectArguments: string[]): Promise<number> {
   // NOTE: Uses GitHub Actions interface to exec
