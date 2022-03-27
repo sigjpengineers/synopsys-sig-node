@@ -31,7 +31,7 @@ export async function findOrDownloadDetect(download_dir: string, verbose: boolea
 
   const detectDownloadUrl = createDetectDownloadUrl()
 
-  const Downloader = require("nodejs-file-downloader").Downloader
+  const Downloader = require("nodejs-file-downloader")
 
   logger.info(`Downloading ${detectDownloadUrl}`)
   const downloader = new Downloader({
@@ -61,11 +61,18 @@ export async function githubRunDetect(detectPath: string, detectArguments: strin
 */
 
 export async function runDetect(detectPath: string, detectArguments: string[]): Promise<number> {
+  logger.info(`Step 1`)
   const JavaCaller = require('java-caller');
+  logger.info(`Step 2`)
+
   const JAVA_CALLER_OPTIONS = {
     jar: detectPath
   }
+  logger.info(`Step 3`)
+
   const java = new JavaCaller(JAVA_CALLER_OPTIONS)
+  logger.info(`Step 4`)
+
   const {status, stdout, stderr} = java.run(detectArguments)
 
   return status
