@@ -69,7 +69,6 @@ export function coverityIsInDiff(issue: CoverityIssueOccurrence, diffMap: DiffMa
     const relativePath = issue.strippedMainEventFilePathname.startsWith('/') ?
         relatavize_path(process.cwd(), issue.strippedMainEventFilePathname) :
         issue.strippedMainEventFilePathname
-    logger.info(`is ${relativePath}:${issue.mainEventLineNumber} (was ${issue.strippedMainEventFilePathname}) in diff?`)
 
     const diffHunks = diffMap.get(relativePath)
 
