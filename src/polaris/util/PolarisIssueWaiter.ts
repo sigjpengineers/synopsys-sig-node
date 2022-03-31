@@ -33,19 +33,8 @@ export default class PolarisIssueWaiter {
             var branch_id = json_path.query(scan_json, "$.projectInfo.branchId")
             var revision_id = json_path.query(scan_json, "$.projectInfo.revisionId")
 
+            /*
             logger.info(`Connect to Polaris: ${polaris_service.polaris_url} and fetch issues for project=${project_id} and branch=${branch_id}`)
-
-
-            let runs_url = polaris_service.polaris_url +
-                "/api/common/v0/runs?filter[run][project][id][eq]=" + project_id +
-                "filter[run][revision][branch][id][eq]=" + branch_id
-
-            var run_details = await polaris_service.fetch_issue_data(runs_url)
-            logger.info(`RUN DETAILS JSON: ${JSON.stringify(run_details.data, null, 2)}`)
-
-
-
-
 
             let issue_details_url = polaris_service.polaris_url +
                 "/api/query/v1/issues?project-id=" + project_id +
@@ -54,6 +43,8 @@ export default class PolarisIssueWaiter {
             var issue_details = await polaris_service.fetch_issue_data(issue_details_url)
             logger.info(`ISSUE DETAILS JSON: ${JSON.stringify(issue_details.data, null, 2)}`)
 
+
+             */
 
             // response.result as ICoverityIssuesSearchResponse
 
