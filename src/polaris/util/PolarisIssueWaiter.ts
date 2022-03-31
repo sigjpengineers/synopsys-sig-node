@@ -16,7 +16,8 @@ export default class PolarisIssueWaiter {
         var scan_json = JSON.parse(scan_json_text);
 
         var issue_counts = json_path.query(scan_json, "$.issueSummary.total");
-        if (issue_counts.length == 0) {
+        //if (issue_counts.length == 0) {
+        if (1) {
             this.log.info("No issues found in scan json, will go to Polaris Software Integrity Platform server.")
 
             var job_status_urls = json_path.query(scan_json, "$.tools[*].jobStatusUrl");
