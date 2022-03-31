@@ -49,10 +49,15 @@ export default class PolarisRunner {
 
         logger.info(`Executing ${polaris_install.polaris_executable} with line=${build_command}`)
 
+        /*
         const exec = require('await-exec')
 
         var return_code = await exec(`${polaris_install.polaris_executable} ${build_command}`)
+        */
 
+        var return_code = await exec(polaris_install.polaris_executable,
+            build_command.split(' '),
+            { ignoreReturnCode: true })
         /*
         await exec(polaris_install.polaris_executable,
             ['-jar', detectPath].concat(detectArguments), { ignoreReturnCode: true })
