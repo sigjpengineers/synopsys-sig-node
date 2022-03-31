@@ -131,6 +131,12 @@ export default class PolarisService {
         });
     }
 
+    async get_url(url: string): Promise<any> {
+        return await this.axios.get(url, {
+            headers: this.headers
+        });
+    }
+
     async fetch_organization_name(): Promise<string | null> {
         var target = this.polaris_url + "/api/auth/contexts";
         var result = await this.axios({
