@@ -40,7 +40,7 @@ export default class PolarisIssueWaiter {
                 "&branch-id=" + branch_id + "&compare-run-id\%5B%5D=earlier&page%5Boffset%5D=0&page%5Blimit%5D=1000"
 
             var issue_details = await polaris_service.fetch_issue_data(issue_details_url)
-            logger.info(`ISSUE DETAILS JSON: ${issue_details.data}`)
+            logger.info(`ISSUE DETAILS JSON: ${JSON.stringify(issue_details.data)}`)
 
             // response.result as ICoverityIssuesSearchResponse
 
