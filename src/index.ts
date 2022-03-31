@@ -140,29 +140,7 @@ export {
   sigmaCreateMessageFromIssue
 } from './sigma/sigma-utils'
 // Polaris
-export {
-  PolarisExecutableFinder,
-  PolarisInstaller,
-  PolarisRunner,
-} from './polaris/cli'
-export {
-  PolarisInputReader
-} from './polaris/input'
-export {
-  PolarisConnection,
-  PolarisInstall,
-  PolarisProxyInfo,
-  PolarisRunResult,
-  PolarisTaskInputs
-} from './polaris/model'
-export {
-  PolarisJobService,
-  PolarisService
-} from './polaris/service'
-export {
-  PolarisIssueWaiter,
-  PolarisPlatformSupport
-} from './polaris/util'
+// ...
 // Other
 export { logger } from './SIGLogger'
 export {
