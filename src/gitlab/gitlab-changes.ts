@@ -9,12 +9,11 @@ export async function gitlabGetChangesForMR(gitlab_url: string, gitlab_token: st
     logger.debug(`Merge Request title is ${merge_request.title}`)
 
     let changed_files: string[] = []
-
-    let changes = merge_request.changes
+    let changes = await api.MergeRequests.changes(project_id, merge_request_iid)
     logger.info(`Loop through ${changes}`)
-    if (changes) {
+    if (changes && changes.changes) {
         logger.info(`For change of changes...`)
-        for (const change of changes) {
+        for (const change of changes.changes) {
             logger.info(`change to ${change.new_path}`)
             const filename = change.new_path
             changed_files.push(filename)
