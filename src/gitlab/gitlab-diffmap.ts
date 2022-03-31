@@ -2,7 +2,7 @@ import {Gitlab} from "@gitbeaker/node";
 import {logger} from "../SIGLogger";
 
 export async function gitlabGetDiffMap(gitlab_url: string, gitlab_token: string, project_id: string, merge_request_iid: number): Promise<Map<any, any>> {
-    const api = new Gitlab({ token: gitlab_token })
+    const api = new Gitlab({ host: gitlab_url, token: gitlab_token })
 
     logger.debug(`Getting commits for merge request #${merge_request_iid} in project #${project_id}`)
     let commits = await api.MergeRequests.commits(project_id, merge_request_iid)
