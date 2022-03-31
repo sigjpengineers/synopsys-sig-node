@@ -12,7 +12,12 @@ export default class PolarisInputReader {
                      should_changeset_fail: boolean): PolarisTaskInputs {
         var polaris_proxy_info: PolarisProxyInfo | undefined = undefined;
 
-        polaris_proxy_info = new PolarisProxyInfo(proxy_url, proxy_username, proxy_password);
+        if (proxy_url && proxy_url.length > 0 && proxy_username && proxy_username.length > 0 &&
+            proxy_password && proxy_password.length > 0) {
+            polaris_proxy_info = new PolarisProxyInfo(proxy_url, proxy_username, proxy_password);
+        } else {
+            polaris_proxy_info = undefined
+        }
 
         if (polaris_url.endsWith("/") || polaris_url.endsWith("\\")) {
             polaris_url = polaris_url.slice(0, -1);
