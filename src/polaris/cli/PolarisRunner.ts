@@ -49,6 +49,7 @@ export default class PolarisRunner {
 
         logger.info(`Executing ${polaris_install.polaris_executable} with line=${build_command}`)
 
+        var return_code = await exec(polaris_install.polaris_executable, [ build_command ])
         /*
         await exec(polaris_install.polaris_executable,
             ['-jar', detectPath].concat(detectArguments), { ignoreReturnCode: true })
@@ -64,8 +65,6 @@ export default class PolarisRunner {
         });
 
          */
-
-        var return_code = 1
 
         var synopsysFolder = path.join(cwd, ".synopsys");
         var polarisFolder = path.join(synopsysFolder, "polaris");
