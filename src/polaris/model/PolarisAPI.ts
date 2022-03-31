@@ -5,6 +5,7 @@ export const KEY_CLASSIFICATION = 'classification'
 export const KEY_FIRST_SNAPSHOT_ID = 'firstSnapshotId'
 export const KEY_LAST_SNAPSHOT_ID = 'lastDetectedId'
 
+/*
 export interface IPolarisIssueData {
     data: IPolarisIssue[]
 }
@@ -26,3 +27,6 @@ interface ICoverityIssueOccurrenceRequest {
     snapshotScope?: ICoveritySnapshotScopeFilter
     columns: string[]
 }
+
+
+ */
