@@ -48,6 +48,7 @@ export default class PolarisIssueWaiter {
             if (issue_api_url.length > 0) {
                 this.log.info("Getting issues from Polaris Software Integrity Platform server.")
                 var issue_response =  await polaris_service.fetch_issue_data(issue_api_url[0]);
+                logger.info(`issue_response.data=${issue_response.data}`)
                 issue_counts = json_path.query(issue_response.data, "$.data..attributes.value");
             }
         } else {
