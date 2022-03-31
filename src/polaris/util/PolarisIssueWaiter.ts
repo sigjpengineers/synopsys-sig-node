@@ -3,6 +3,7 @@ import PolarisService from "../service/PolarisService";
 const fs = require('fs');
 const json_path = require('jsonpath');
 import PolarisJobService from '../service/PolarisJobService';
+import {logger} from "../../SIGLogger";
 
 export default class PolarisIssueWaiter {
     log: any;
@@ -26,6 +27,19 @@ export default class PolarisIssueWaiter {
             } else {
                 this.log.info("No jobs were found to wait for.")
             }
+
+            var project_id = json_path.query(scan_json, "$.projectInfo.projectId")
+            var branch_id = json_path.query(scan_json, "$.projectInfo.branchId")
+            var revision_id = json_path.query(scan_json, "$.projectInfo.revisionId")
+
+            logger.info(`Connect to Polaris: ${polaris_service.polaris_url} and fetch issues for project=${project_id} and branch=${branch_id}`)
+
+            let issue_details_url = polaris_service.polaris_url +
+                "/api/query/v1/issues?project-id=" + project_id +
+                "&branch-id=" + branch_id + "&compare-run-id\%5B%5D=earlier&page%5Boffset%5D=0&page%5Blimit%5D=1000"
+
+            var issue_details = await polaris_service.fetch_issue_data(issue_details_url)
+            logger.info(`ISSUE DETAILS: ${issue_details}`)
 
             var issue_api_url = json_path.query(scan_json, "$.scanInfo.issueApiUrl");
             if (issue_api_url.length > 0) {

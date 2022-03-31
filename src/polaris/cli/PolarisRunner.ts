@@ -49,30 +49,9 @@ export default class PolarisRunner {
 
         logger.info(`Executing ${polaris_install.polaris_executable} with line=${build_command}`)
 
-        /*
-        const exec = require('await-exec')
-
-        var return_code = await exec(`${polaris_install.polaris_executable} ${build_command}`)
-        */
-
         var return_code = await exec(polaris_install.polaris_executable,
             build_command.split(' '),
             { ignoreReturnCode: true })
-        /*
-        await exec(polaris_install.polaris_executable,
-            ['-jar', detectPath].concat(detectArguments), { ignoreReturnCode: true })
-         */
-
-        /*
-        let exe = tl.tool(polaris_install.polaris_executable);
-        exe.line(build_command);
-    
-        var return_code =  await exe.exec(<tr.IExecOptions>{
-            cwd: cwd,
-            env: env
-        });
-
-         */
 
         var synopsysFolder = path.join(cwd, ".synopsys");
         var polarisFolder = path.join(synopsysFolder, "polaris");
