@@ -200,8 +200,6 @@ export async function getIssuesPage(polarisService: PolarisService, projectId: s
         `&include[issue][]=severity` +
         `&include[issue][]=related-taxa`
 
-    logger.debug(`Fetch issues from: ${issues_path}`)
-
     if (branchId.length > 0) {
         issues_path += `&branch-id=${branchId}`
     }
@@ -213,6 +211,8 @@ export async function getIssuesPage(polarisService: PolarisService, projectId: s
     if (compareRunId && compareRunId.length > 0) {
         issues_path += `&compare-run-id[]=${compareRunId}`
     }
+
+    logger.debug(`Fetch issues from: ${issues_path}`)
 
     const issues_data = await polarisService.get_url(issues_path)
 
