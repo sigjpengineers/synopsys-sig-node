@@ -38,6 +38,8 @@ export async function polarisGetRunsPage(polarisService: PolarisService, project
         `&filter[run][project][id][eq]=${projectId}` +
         `&filter[run][revision][branch][id][eq]=${branchId}`
 
+    logger.debug(`Fetch runs from: ${runs_path}`)
+
     const run_data = await polarisService.get_url(runs_path)
 
     //logger.debug(`Polaris runs data for projectId ${projectId} and branchId ${branchId}: ${JSON.stringify(run_data.data, null, 2)}`)
@@ -198,6 +200,8 @@ export async function getIssuesPage(polarisService: PolarisService, projectId: s
         `&include[issue][]=severity` +
         `&include[issue][]=related-taxa`
 
+    logger.debug(`Fetch issues from: ${issues_path}`)
+
     if (branchId.length > 0) {
         issues_path += `&branch-id=${branchId}`
     }
@@ -224,6 +228,8 @@ export async function polarisGetIssueTriage(polarisService: PolarisService, proj
         `/api/triage-query/v1/triage-current/project-id%3A${projectId}` +
         `%3Aissue-key%3A${issueKey}`
 
+    logger.debug(`Fetch issue triage from: ${triage_path}`)
+
     const triage_data = await polarisService.get_url(triage_path)
 
     //logger.debug(`Polaris triage data for projectId ${projectId} and issueKey ${issueKey} ${JSON.stringify(triage_data.data, null, 2)}`)
@@ -238,6 +244,8 @@ export async function polarisGetIssueEvents(polarisService: PolarisService,
     let events_path = `${polarisService.polaris_url}` +
         `/api/code-analysis/v0/events?finding-key=${findingKey}` +
         `&run-id=${runId}`
+
+    logger.debug(`Fetch issue events from: ${events_path}`)
 
     const events_data = await polarisService.get_url(events_path)
 
@@ -255,6 +263,8 @@ export async function polarisGetIssueEventsWithSource(polarisService: PolarisSer
         `&run-id=${runId}` +
         `&occurrence-number=1` +
         `&max-depth=10`
+
+    logger.debug(`Fetch issue events with source from: ${events_with_source_path}`)
 
     const events_with_source_data = await polarisService.get_url(events_with_source_path)
 
@@ -336,7 +346,6 @@ This issue was discovered outside the diff for this Pull Request. You can find i
 }
 
 export function polarisIsInDiff(issue: IPolarisIssueUnified, diffMap: DiffMap): boolean {
-
     const diffHunks = diffMap.get(issue.path)
 
     if (!diffHunks) {
