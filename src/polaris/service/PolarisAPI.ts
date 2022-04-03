@@ -263,7 +263,9 @@ export async function getIssuesPage(polarisService: PolarisService, projectId: s
     }
 
     if (filterOpenOrClosed && filterOpenOrClosed.length > 0) {
-        issues_path += `&filter[issue][status][$eq]=${filterOpenOrClosed}`
+        //issues_path += `&filter[issue][status][$eq]=${filterOpenOrClosed}`
+        issues_path += `&filter%5Bissue%5D%5Bstatus%5D%5B%24eq%5D=${filterOpenOrClosed}`
+
     }
 
     //  // curl -X GET "https://sipse.polaris.synopsys.com/api/query/v1/issues?p
