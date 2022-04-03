@@ -251,15 +251,15 @@ export async function getIssuesPage(polarisService: PolarisService, projectId: s
     }
 
     if (runId.length > 0) {
-        issues_path += `&run-id[]=${runId}`
+        issues_path += `&run-id=${runId}`
     }
 
     if (compareRunId && compareRunId.length > 0) {
-        issues_path += `&compare-run-id[]=${compareRunId}`
+        issues_path += `&compare-run-id=${compareRunId}`
     }
 
     if (compareBranchId && compareBranchId.length > 0) {
-        issues_path += `&compare-branch-id[]=${compareBranchId}`
+        issues_path += `&compare-branch-id=${compareBranchId}`
     }
 
     if (filterOpenOrClosed && filterOpenOrClosed.length > 0) {
