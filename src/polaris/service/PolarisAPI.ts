@@ -90,8 +90,12 @@ export async function polarisGetBranchesPage(polarisService: PolarisService, pro
 
 export async function polarisGetIssuesUnified(polarisService: PolarisService, projectId: string, branchId: string,
                                               useBranch: boolean, runId: string,
-                                              compareRunId: string): Promise <IPolarisIssueUnified[]> {
-    let issues = await polarisGetIssues(polarisService, projectId, useBranch ? branchId : "", runId, compareRunId)
+                                              compareBranchId: string,
+                                              compareRunId: string,
+                                              filterOpenOrClosed: string): Promise <IPolarisIssueUnified[]> {
+    let issues = await polarisGetIssues(polarisService, projectId,
+        useBranch ? branchId : "", runId,
+        compareBranchId, compareRunId, filterOpenOrClosed)
 
     logger.debug(`There are ${issues.issueData.length} issues for project: ${projectId} and run: ${runId}`)
 
@@ -205,7 +209,7 @@ export async function polarisGetIssuesUnified(polarisService: PolarisService, pr
 }
 
 export async function polarisGetIssues(polarisService: PolarisService, projectId: string, branchId: string, runId: string,
-                                       compareRunId: string): Promise <IPolarisIssueDataReturn> {
+                                       compareBranchId: string, compareRunId: string, filterOpenOrClosed: string): Promise <IPolarisIssueDataReturn> {
     let complete = false
     let offset = 0
     let limit = 25
@@ -214,7 +218,9 @@ export async function polarisGetIssues(polarisService: PolarisService, projectId
     let collected_includes = Array()
 
     while (!complete) {
-        let issues_page = await getIssuesPage(polarisService, projectId, branchId, runId, compareRunId, limit, offset)
+        let issues_page = await getIssuesPage(polarisService, projectId, branchId, runId,
+            compareBranchId, compareRunId, filterOpenOrClosed,
+            limit, offset)
         collected_issues = collected_issues.concat(issues_page.data)
         collected_includes = collected_includes.concat(issues_page.included)
         offset = offset + limit
@@ -230,7 +236,8 @@ export async function polarisGetIssues(polarisService: PolarisService, projectId
 }
 
 export async function getIssuesPage(polarisService: PolarisService, projectId: string, branchId: string, runId: string,
-                                    compareRunId: string,
+                                    compareBranchId: string, compareRunId: string,
+                                    filterOpenOrClosed: string,
                                     limit: number, offset: number): Promise <IPolarisIssueData> {
     let issues_path = `${polarisService.polaris_url}` +
         `/api/query/v1/issues?page[limit]=${limit}` +
@@ -250,6 +257,21 @@ export async function getIssuesPage(polarisService: PolarisService, projectId: s
     if (compareRunId && compareRunId.length > 0) {
         issues_path += `&compare-run-id[]=${compareRunId}`
     }
+
+    if (compareBranchId && compareBranchId.length > 0) {
+        issues_path += `&compare-branch-id[]=${compareBranchId}`
+    }
+
+    if (filterOpenOrClosed && filterOpenOrClosed.length > 0) {
+        issues_path += `&filter[issue][status][$eq]=${filterOpenOrClosed}`
+    }
+
+    //  // curl -X GET "https://sipse.polaris.synopsys.com/api/query/v1/issues?p
+    //  roject-id=f435f59c-5abb-4957-a725-28d93f0e645b
+    //  &branch-id=c7b567ee-39ae-4ca2-8d56-7496d29f32d8
+    //  &compare-branch-id=94f11f15-2892-4496-9245-b53b6d25ca10
+    //  &filter%5Bissue%5D%5Bstatus%5D%5B%24eq%5D=closed
+    //  &page%5Blimit%5D=50" -H "accept: application/vnd.api+json"
 
     logger.debug(`Fetch issues from: ${issues_path}`)
 
