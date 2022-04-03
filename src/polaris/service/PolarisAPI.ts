@@ -88,13 +88,15 @@ export async function polarisGetBranchesPage(polarisService: PolarisService, pro
     return(branches)
 }
 
-export async function polarisGetIssuesUnified(polarisService: PolarisService, projectId: string, branchId: string,
-                                              useBranch: boolean, runId: string,
+export async function polarisGetIssuesUnified(polarisService: PolarisService, projectId: string,
+                                              branchId: string, useBranch: boolean,
+                                              runId: string, useRun: boolean,
                                               compareBranchId: string,
                                               compareRunId: string,
                                               filterOpenOrClosed: string): Promise <IPolarisIssueUnified[]> {
     let issues = await polarisGetIssues(polarisService, projectId,
-        useBranch ? branchId : "", runId,
+        useBranch ? branchId : "",
+        useRun ? runId : "",
         compareBranchId, compareRunId, filterOpenOrClosed)
 
     logger.debug(`There are ${issues.issueData.length} issues for project: ${projectId} and run: ${runId}`)
