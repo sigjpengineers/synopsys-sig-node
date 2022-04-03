@@ -12,6 +12,7 @@ import {
 } from "../model/PolarisAPI";
 import {logger} from "../../SIGLogger";
 import {DiffMap} from "../../diffmap";
+import {COVERITY_NOT_PRESENT} from "../../coverity/coverity-utils";
 
 export async function polarisGetRuns(polarisService: PolarisService, projectId: string, branchId: string): Promise <IPolarisRun[]> {
     let complete = false
@@ -340,45 +341,6 @@ export async function polarisGetIssueEventsWithSource(polarisService: PolarisSer
     return(events.data)
 }
 
-
-
-/*
-    let issue_events_url = polaris_service.polaris_url +
-        "/api/code-analysis/v0/events?finding-key=" + issue.attributes["finding-key"] +
-        "&run-id=" + this_run_id
-
- */
-
-/*
-export function polarisCreateReviewCommentMessage(issue: IPolarisIssue, events: IPolarisCodeAnalysisEvents): string {
-    const issueTypeId = issue.relationships["issue-type"]?.data.id
-    const issueName = issue.
-    if (issue.attributes)
-    const issueName = issue.checkerProperties ? issue.checkerProperties.subcategoryShortDescription : issue.checkerName
-    const checkerNameString = issue.checkerProperties ? `\r\n_${issue.checkerName}_` : ''
-    const impactString = issue.checkerProperties ? issue.checkerProperties.impact : 'Unknown'
-    const cweString = issue.checkerProperties ? `, CWE-${issue.checkerProperties.cweCategory}` : ''
-    const mainEvent = issue.events.find(event => event.main)
-    const mainEventDescription = mainEvent ? mainEvent.eventDescription : ''
-    const remediationEvent = issue.events.find(event => event.remediation)
-    const remediationString = remediationEvent ? `## How to fix\r\n ${remediationEvent.eventDescription}` : ''
-
-    return `${COVERITY_COMMENT_PREFACE}
-${issue.mergeKey}
-${COVERITY_PRESENT}
--->
-
-# Coverity Issue - ${issueName}
-${mainEventDescription}
-
-_${impactString} Impact${cweString}_${checkerNameString}
-
-${remediationString}
-`
-}
-
- */
-
 export const POLARIS_PRESENT = 'PRESENT'
 export const POLARIS_NOT_PRESENT = 'NOT_PRESENT'
 export const POLARIS_UNKNOWN_FILE = 'Unknown File'
@@ -428,4 +390,19 @@ export async function polarisGetTriageValue(attribute_name: string, triage_value
         }
     }
     return Promise.reject()
+}
+
+export function polarisCreateNoLongerPresentMessage(existingMessage: string, asOf: string): string {
+    const existingMessageLines = existingMessage.split('\n')
+    return `${existingMessageLines[0]}
+${existingMessageLines[1]}
+${COVERITY_NOT_PRESENT}
+-->
+
+Polaris issue no longer present as of: ${asOf}
+<details>
+<summary>Show issue</summary>
+
+${existingMessageLines.slice(4).join('\n')}
+</details>`
 }
