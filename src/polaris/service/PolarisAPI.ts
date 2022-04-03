@@ -1,5 +1,7 @@
 import PolarisService from "./PolarisService";
 import {
+    IPolarisBranch,
+    IPolarisBranchData,
     IPolarisCodeAnalysisEvents, IPolarisCodeAnalysisEventsData,
     IPolarisIssueData,
     IPolarisIssueDataReturn, IPolarisIssueTriage, IPolarisIssueTriageData, IPolarisIssueTriageValue,
@@ -47,6 +49,40 @@ export async function polarisGetRunsPage(polarisService: PolarisService, project
     const runs = run_data.data as IPolarisRunData
 
     return(runs)
+}
+
+export async function polarisGetBranches(polarisService: PolarisService, projectId: string): Promise <IPolarisBranch[]> {
+    let complete = false
+    let offset = 0
+    let limit = 25
+
+    let collected_branches = Array()
+
+    while (!complete) {
+        let branch_page = await polarisGetBranchesPage(polarisService, projectId, limit, offset)
+        collected_branches = collected_branches.concat(branch_page.data)
+        offset = offset + limit
+        if (offset >= branch_page.meta.total) {
+            complete = true
+        }
+    }
+
+    return(collected_branches)
+}
+export async function polarisGetBranchesPage(polarisService: PolarisService, projectId: string,
+                                         limit: number, offset: number): Promise <IPolarisBranchData> {
+    let branches_path = `${polarisService.polaris_url}` +
+        `filter[branch][project][id][$eq]=${projectId}`
+
+    logger.debug(`Fetch branches from: ${branches_path}`)
+
+    const branch_data = await polarisService.get_url(branches_path)
+
+    logger.debug(`Polaris branch data for projectId ${projectId} : ${JSON.stringify(branch_data.data, null, 2)}`)
+
+    const branches = branch_data.data as IPolarisBranchData
+
+    return(branches)
 }
 
 export async function polarisGetIssuesUnified(polarisService: PolarisService, projectId: string, branchId: string,

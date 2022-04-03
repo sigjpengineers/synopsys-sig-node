@@ -63,6 +63,42 @@ export interface IPolarisRun {
     }
 }
 
+export interface IPolarisBranchData {
+    data: IPolarisBranch[],
+    "meta": {
+        "offset": number,
+        "limit": number,
+        "total": number
+    }
+}
+
+export interface IPolarisBranch {
+    "type": string,
+    "id": string,
+    "attributes": {
+        "name": string,
+        "main-for-project": boolean
+    },
+    relationships: {
+        "revisions"?: {
+            links: IPolarisRelationshipLink,
+            data: IPolarisRelationshipData
+        },
+        "project"?: {
+            links: IPolarisRelationshipLink,
+            data: IPolarisRelationshipData
+        }
+    }
+    links: {
+        self: IPolarisHref
+    },
+    meta: {
+        "etag": string,
+        "organization-id": string,
+        "in-trash": boolean
+    }
+}
+
 export interface IPolarisIssueDataReturn {
     issueData: IPolarisIssue[],
     issueIncluded: IPolarisIssueIncluded[]
