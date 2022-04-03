@@ -72,7 +72,7 @@ export async function polarisGetBranches(polarisService: PolarisService, project
 export async function polarisGetBranchesPage(polarisService: PolarisService, projectId: string,
                                          limit: number, offset: number): Promise <IPolarisBranchData> {
     let branches_path = `${polarisService.polaris_url}` +
-        `.api/common/v0/branches` +
+        `/api/common/v0/branches` +
         `&filter[branch][project][id][$eq]=${projectId}`
 
     logger.debug(`Fetch branches from: ${branches_path}`)
