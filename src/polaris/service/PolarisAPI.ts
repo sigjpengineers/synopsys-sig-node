@@ -312,7 +312,7 @@ export async function polarisGetIssueEvents(polarisService: PolarisService,
 
     const events_data = await polarisService.get_url(events_path)
 
-    //logger.debug(`Polaris events data for findingKey ${findingKey} and runId ${runId}: ${JSON.stringify(events_data.data, null, 2)}`)
+    logger.debug(`Polaris events data for findingKey ${findingKey} and runId ${runId}: ${JSON.stringify(events_data.data, null, 2)}`)
 
     const events = events_data.data as IPolarisCodeAnalysisEventsData
 
@@ -331,7 +331,7 @@ export async function polarisGetIssueEventsWithSource(polarisService: PolarisSer
 
     const events_with_source_data = await polarisService.get_url(events_with_source_path)
 
-    //.debug(`Polaris events with source data for findingKey ${findingKey} and runId ${runId}: ${JSON.stringify(events_with_source_data.data, null, 2)}`)
+    logger.debug(`Polaris events with source data for findingKey ${findingKey} and runId ${runId}: ${JSON.stringify(events_with_source_data.data, null, 2)}`)
 
     const events = events_with_source_data.data as IPolarisCodeAnalysisEventsData
 
