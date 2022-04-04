@@ -1,6 +1,7 @@
 import {ExistingIssueComment, ExistingReviewComment, NewReviewComment} from "../_namespaces/github";
 import {context, getOctokit} from "@actions/github";
 import {githubGetPullRequestNumber} from "./github-context";
+import {logger} from "../SIGLogger";
 
 export async function githubGetExistingReviewComments(github_token: string): Promise<ExistingReviewComment[]> {
     const octokit = getOctokit(github_token)
@@ -38,6 +39,7 @@ export async function githubCreateReview(github_token: string, comments: NewRevi
         return Promise.reject(Error('Could not create Pull Request Review Comment: Action was not running on a Pull Request'))
     }
 
+    logger.debug(`PR number: ${pullRequestNumber} owner: ${context.repo.owner} repo: ${context.repo.repo} event: ${event}`)
     octokit.rest.pulls.createReview({
         owner: context.repo.owner,
         repo: context.repo.repo,
