@@ -396,7 +396,7 @@ export function polarisCreateNoLongerPresentMessage(existingMessage: string, asO
     const existingMessageLines = existingMessage.split('\n')
     return `${existingMessageLines[0]}
 ${existingMessageLines[1]}
-${COVERITY_NOT_PRESENT}
+${POLARIS_NOT_PRESENT}
 -->
 
 Polaris issue no longer present as of: ${asOf}

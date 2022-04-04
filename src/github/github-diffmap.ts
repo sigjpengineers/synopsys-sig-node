@@ -10,7 +10,10 @@ export function githubGetDiffMap(rawDiff: string): DiffMap {
     for (const line of rawDiff.split('\n')) {
         if (line.startsWith('diff --git')) {
             // TODO: Handle spaces in path
-            path = `${process.env.GITHUB_WORKSPACE}/${line.split(' ')[2].substring(2)}`
+            // TODO: Will this continue to work with other GitHub integrations?
+            // path = `${process.env.GITHUB_WORKSPACE}/${line.split(' ')[2].substring(2)}`
+            path = `${line.split(' ')[2].substring(2)}`
+
             if (path === undefined) {
                 path = UNKNOWN_FILE
             }
