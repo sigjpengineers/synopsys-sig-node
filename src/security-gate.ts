@@ -24,7 +24,6 @@ export function isIssueAllowed(securityFilters: typeof CaseInsensitiveMap,
                         severity: string,
                         cwe: string,
                         isNew: boolean = false): boolean {
-    logger.debug(`status filter = ${securityFilters.get("status")} isNew = ${isNew} and ${securityFilters.get("status")?.indexOf("new")}`)
     if (securityFilters.get("status") && isNew && securityFilters.get("status")?.indexOf("new") >= 0) {
         return(false)
     }
