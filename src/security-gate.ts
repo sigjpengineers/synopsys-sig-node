@@ -2,7 +2,7 @@ import {logger} from "./SIGLogger";
 
 const CaseInsensitiveMap = require('case-insensitive-map')
 
-function readSecurityGateFiltersFromString(securityGateString: string): typeof CaseInsensitiveMap {
+export function readSecurityGateFiltersFromString(securityGateString: string): typeof CaseInsensitiveMap {
     const securityGateJson = JSON.parse(securityGateString)
     let securityGateMap = new CaseInsensitiveMap()
     logger.debug(`Reading security gate filters`)
@@ -20,7 +20,7 @@ function readSecurityGateFiltersFromString(securityGateString: string): typeof C
     return(securityGateMap)
 }
 
-function isIssueAllowed(securityFilters: typeof CaseInsensitiveMap,
+export function isIssueAllowed(securityFilters: typeof CaseInsensitiveMap,
                         severity: string,
                         cwe: string,
                         isNew: boolean = false): boolean {

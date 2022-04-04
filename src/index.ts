@@ -150,4 +150,8 @@ export {
 export {
   relatavize_path
 } from './paths'
+export {
+  readSecurityGateFiltersFromString,
+  isIssueAllowed
+} from './security-gate'
 
