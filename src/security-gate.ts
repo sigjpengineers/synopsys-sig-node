@@ -25,11 +25,11 @@ export function isIssueAllowed(securityFilters: typeof CaseInsensitiveMap,
                         cwe: string,
                         isNew: boolean = false): boolean {
     logger.debug(`status filter = ${securityFilters.get("status")} isNew = ${isNew} and ${securityFilters.get("status")?.indexOf("new")}`)
-    if (securityFilters.get("status") && isNew && securityFilters.get("status")?.indexOf("new") > 0) {
+    if (securityFilters.get("status") && isNew && securityFilters.get("status")?.indexOf("new") >= 0) {
         return(false)
     }
 
-    if (securityFilters.get("severity") && securityFilters.get("severity")?.indexOf(severity) > 0) {
+    if (securityFilters.get("severity") && securityFilters.get("severity")?.indexOf(severity) >= 0) {
         return(false)
     }
 
