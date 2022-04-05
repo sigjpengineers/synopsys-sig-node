@@ -5,6 +5,7 @@ export async function gitlabGetChangesForMR(gitlab_url: string, gitlab_token: st
     const api = new Gitlab({ host: gitlab_url, token: gitlab_token })
 
     logger.debug(`Getting merge request #${merge_request_iid} in project #${project_id}`)
+    logger.debug(`GITLAB_TOKEN=${gitlab_token} GITLAB_URL=${gitlab_url}`)
     let merge_request = await api.MergeRequests.show(project_id, merge_request_iid)
     logger.debug(`Merge Request title is ${merge_request.title}`)
 
