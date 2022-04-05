@@ -3,7 +3,7 @@ import {Gitlab} from "@gitbeaker/node";
 import {logger} from "../SIGLogger";
 
 export async function gitlabGetDiscussions(gitlab_url: string, gitlab_token: string, project_id: string, merge_request_iid: number): Promise<DiscussionSchema[]> {
-    const api = new Gitlab({ token: gitlab_token })
+    const api = new Gitlab({ host: gitlab_url, token: gitlab_token })
 
     logger.debug(`Getting merge request #${merge_request_iid} in project #${project_id}`)
     logger.debug(`GITLAB_TOKEN=${gitlab_token} GITLAB_URL=${gitlab_url}`)
@@ -32,7 +32,7 @@ export async function gitlabGetDiscussions(gitlab_url: string, gitlab_token: str
 
 export async function gitlabUpdateNote(gitlab_url: string, gitlab_token: string, project_id: string, merge_request_iid: number,
                                        discussion_id: number, note_id: number, body: string): Promise<void> {
-    const api = new Gitlab({ token: gitlab_token })
+    const api = new Gitlab({ host: gitlab_url, token: gitlab_token })
 
     logger.debug(`Update discussion #${discussion_id} note #${note_id} for merge request #${merge_request_iid} in project #${project_id} `)
     logger.debug(`new body is: ${body}`)
@@ -43,7 +43,7 @@ export async function gitlabUpdateNote(gitlab_url: string, gitlab_token: string,
 export async function gitlabCreateDiscussionWithoutPosition(gitlab_url: string, gitlab_token: string,
                                                             project_id: string, merge_request_iid: number,
                                                             body: string): Promise<void> {
-    const api = new Gitlab({ token: gitlab_token })
+    const api = new Gitlab({ host: gitlab_url, token: gitlab_token })
 
     logger.debug(`Create new discussion for merge request #${merge_request_iid} in project #${project_id}`)
 
@@ -52,7 +52,7 @@ export async function gitlabCreateDiscussionWithoutPosition(gitlab_url: string, 
 
 export async function gitlabCreateDiscussion(gitlab_url: string, gitlab_token: string, project_id: string, merge_request_iid: number,
                                              line: number, filename: string, body: string, base_sha: string, commit_sha: string): Promise<void> {
-    const api = new Gitlab({ token: gitlab_token })
+    const api = new Gitlab({ host: gitlab_url, token: gitlab_token })
 
     let merge_request = await api.MergeRequests.show(project_id, merge_request_iid)
 
