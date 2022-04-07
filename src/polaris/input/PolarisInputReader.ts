@@ -23,6 +23,10 @@ export default class PolarisInputReader {
             polaris_url = polaris_url.slice(0, -1);
         }
 
+        if (build_command.includes("--incremental")) {
+            should_changeset = true
+        }
+
         return {
             polaris_connection: new PolarisConnection(polaris_url, polaris_token, polaris_proxy_info),
             build_command: build_command,
