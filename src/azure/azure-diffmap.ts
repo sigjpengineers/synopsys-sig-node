@@ -1,5 +1,6 @@
 import {IGitApi} from "azure-devops-node-api/GitApi";
 import {FileDiffParams, FileDiffsCriteria} from "azure-devops-node-api/interfaces/GitInterfaces";
+import {logger} from "../SIGLogger";
 
 export async function azGetDiffMap(git_agent: IGitApi, repo_id: string, project_id: string, pull_id: number): Promise<Map<any, any>> {
     const diffMap = new Map()
@@ -38,7 +39,9 @@ export async function azGetDiffMap(git_agent: IGitApi, repo_id: string, project_
                                             if (!diffMap.has(change.item.path.substring(1))) {
                                                 diffMap.set(change.item.path.substring(1), [])
                                             }
-                                            //logger.info(`DEBUG: Added ${change.item.path.substring(1)}: ${diffBlock.modifiedLineNumberStart} to ${diffBlock.modifiedLineNumberStart + diffBlock.modifiedLinesCount}`)
+                                            if (diffBlock.modifiedLineNumberStart && diffBlock.modifiedLinesCount) {
+                                                logger.debug(`Added ${change.item.path.substring(1)}: ${diffBlock.modifiedLineNumberStart} to ${diffBlock.modifiedLineNumberStart + diffBlock.modifiedLinesCount}`)
+                                            }
                                             diffMap.get(change.item.path.substring(1))?.push(
                                                 {
                                                     firstLine: diffBlock.modifiedLineNumberStart,
