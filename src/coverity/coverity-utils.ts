@@ -66,11 +66,14 @@ This issue was discovered outside the diff for this Pull Request. You can find i
 }
 
 export function coverityIsInDiff(issue: CoverityIssueOccurrence, diffMap: DiffMap): boolean {
+    /*
     const relativePath = issue.strippedMainEventFilePathname.startsWith('/') ?
         relatavize_path(process.cwd(), issue.strippedMainEventFilePathname) :
         issue.strippedMainEventFilePathname
 
-    const diffHunks = diffMap.get(relativePath)
+     */
+
+    const diffHunks = diffMap.get(issue.strippedMainEventFilePathname)
 
     if (!diffHunks) {
         return false
