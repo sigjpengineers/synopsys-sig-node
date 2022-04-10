@@ -47,12 +47,13 @@ export async function azGetDiffMap(git_agent: IGitApi, repo_id: string, project_
                                             }
                                             if (diffBlock.modifiedLineNumberStart && diffBlock.modifiedLinesCount) {
                                                 logger.debug(`Added ${change.item.path.substring(1)}: ${diffBlock.modifiedLineNumberStart} to ${diffBlock.modifiedLineNumberStart + diffBlock.modifiedLinesCount}`)
+
+                                                diffMap.get(change.item.path.substring(1))?.push(
+                                                    {
+                                                        firstLine: diffBlock.modifiedLineNumberStart,
+                                                        lastLine: diffBlock.modifiedLineNumberStart + diffBlock.modifiedLinesCount
+                                                    })
                                             }
-                                            diffMap.get(change.item.path.substring(1))?.push(
-                                                {
-                                                    firstLine: diffBlock.modifiedLineNumberStart,
-                                                    lastLine: diffBlock.modifiedLineNumberStart ? diffBlock.modifiedLineNumberStart : (diffBlock.modifiedLinesCount ? diffBlock.modifiedLinesCount : 0)
-                                                })
 
                                         }
                                     }
