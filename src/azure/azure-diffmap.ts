@@ -26,7 +26,13 @@ export async function azGetDiffMap(git_agent: IGitApi, repo_id: string, project_
                             diff_criteria.fileDiffParams = [ fileDiffParam ]
                             logger.debug(`Azure fileDiffParam len=${diff_criteria.fileDiffParams.length} dd=${diff_criteria.fileDiffParams}`)
 
-                            let diffs = await git_agent.getFileDiffs(diff_criteria, project_id, repo_id)
+                            let diffs = undefined
+                            try {
+                                diffs = await git_agent.getFileDiffs(diff_criteria, project_id, repo_id)
+                            } catch (error) {
+                                logger.info(`Unable to get diffs for ${change.item.path}: ${error}, skipping`)
+                                continue
+                            }
                             for (const diff of diffs) {
                                 logger.debug(`Azure diff path=${diff.path}`)
 
