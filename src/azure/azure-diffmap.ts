@@ -15,7 +15,7 @@ export async function azGetDiffMap(git_agent: IGitApi, repo_id: string, project_
                 if (changes && changes.changes) {
                     for (const change of changes.changes) {
                         if (change && change.item) {
-                            //logger.info(`DEBUG: change id=${change.changeId} item path=${change.item.path} commitid=${change.item.commitId} url=${change.item.url} content=${change.item.content} type=${change.changeType}`)
+                            logger.debug(`Azure change id=${change.changeId} item path=${change.item.path} commitid=${change.item.commitId} url=${change.item.url} content=${change.item.content} type=${change.changeType}`)
 
                             let diff_criteria: FileDiffsCriteria = <FileDiffsCriteria>{}
                             diff_criteria.baseVersionCommit = change.item.commitId
@@ -24,16 +24,16 @@ export async function azGetDiffMap(git_agent: IGitApi, repo_id: string, project_
                             let fileDiffParam = <FileDiffParams>{}
                             fileDiffParam.path = change.item.path
                             diff_criteria.fileDiffParams = [ fileDiffParam ]
-                            //logger.info(`DEBUG: fileDiffParam len=${diff_criteria.fileDiffParams.length} dd=${diff_criteria.fileDiffParams}`)
+                            logger.debug(`Azure fileDiffParam len=${diff_criteria.fileDiffParams.length} dd=${diff_criteria.fileDiffParams}`)
 
                             let diffs = await git_agent.getFileDiffs(diff_criteria, project_id, repo_id)
                             for (const diff of diffs) {
-                                //logger.info(`DEBUG: diff path=${diff.path}`)
+                                logger.debug(`Azure diff path=${diff.path}`)
 
                                 if (diff.lineDiffBlocks) {
                                     for (const diffBlock of diff.lineDiffBlocks) {
-                                        //logger.info(`diff block mlineStart=${diffBlock.modifiedLineNumberStart} mlineCount=${diffBlock.modifiedLinesCount}`)
-                                        //logger.info(`diff block olineStart=${diffBlock.originalLineNumberStart} olineCount=${diffBlock.originalLinesCount}`)
+                                        logger.debug(`Azure diff block mlineStart=${diffBlock.modifiedLineNumberStart} mlineCount=${diffBlock.modifiedLinesCount}`)
+                                        logger.debug(`Azure diff block olineStart=${diffBlock.originalLineNumberStart} olineCount=${diffBlock.originalLinesCount}`)
 
                                         if (change && change.item && change.item.path) {
                                             if (!diffMap.has(change.item.path.substring(1))) {
