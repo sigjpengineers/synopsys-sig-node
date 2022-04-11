@@ -45,13 +45,16 @@ export async function azCreateReviewComment(git_agent: IGitApi, repo_id: string,
 
     let thread: GitPullRequestCommentThread = <GitPullRequestCommentThread>{}
     thread.threadContext = <CommentThreadContext>{}
-    thread.threadContext.filePath = path
-    thread.threadContext.rightFileStart = <CommentPosition>{}
-    thread.threadContext.rightFileStart.line = line
-    thread.threadContext.rightFileStart.offset = 1
-    thread.threadContext.rightFileEnd = <CommentPosition>{}
-    thread.threadContext.rightFileEnd.line = line
-    thread.threadContext.rightFileEnd.offset = 1
+
+    if (path && line) {
+        thread.threadContext.filePath = path
+        thread.threadContext.rightFileStart = <CommentPosition>{}
+        thread.threadContext.rightFileStart.line = line
+        thread.threadContext.rightFileStart.offset = 1
+        thread.threadContext.rightFileEnd = <CommentPosition>{}
+        thread.threadContext.rightFileEnd.line = line
+        thread.threadContext.rightFileEnd.offset = 1
+    }
     thread.status = 1 // Active
 
     thread.comments = [ comment ]
