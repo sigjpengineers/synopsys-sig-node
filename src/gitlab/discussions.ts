@@ -1,6 +1,7 @@
 import {DiscussionSchema} from "@gitbeaker/core/dist/types/templates/ResourceDiscussions";
 import {Gitlab} from "@gitbeaker/node";
 import {logger} from "../SIGLogger";
+import axios from "axios";
 
 export async function gitlabGetDiscussions(gitlab_url: string, gitlab_token: string, project_id: string, merge_request_iid: number): Promise<DiscussionSchema[]> {
     const api = new Gitlab({ host: gitlab_url, token: gitlab_token })
@@ -52,6 +53,8 @@ export async function gitlabCreateDiscussionWithoutPosition(gitlab_url: string, 
 
 export async function gitlabCreateDiscussion(gitlab_url: string, gitlab_token: string, project_id: string, merge_request_iid: number,
                                              line: number, filename: string, body: string, base_sha: string, commit_sha: string): Promise<void> {
+
+    /*
     const api = new Gitlab({ host: gitlab_url, token: gitlab_token })
 
     let merge_request = await api.MergeRequests.show(project_id, merge_request_iid)
@@ -69,30 +72,11 @@ export async function gitlabCreateDiscussion(gitlab_url: string, gitlab_token: s
             new_line: line.toString()
         }
     })
-
-    //let merge_request = await api.MergeRequests.show(project_id, merge_request_iid)
+    */
 
     // JC: GitBeaker isn't working for this case (filed https://github.com/jdalrymple/gitbeaker/issues/2396)
     // Working around using bare REST query
 
-    /*
-    let options: BaseRequestOptions = <BaseRequestOptions>{}
-    options['body'] = body
-    options['position[position_type]'] = "text"
-    options['position[base_sha]'] = base_sha
-    options['position[start_sha]'] = base_sha
-    options['position[head_sha]'] = commit_sha
-    options['position[new_path]'] = filename
-    options['position[old_path]'] = filename
-    options['position[new_line]'] = line.toString()
-
-    logger.debug(`Before MRD.create`)
-    api.MergeRequestDiscussions.create(project_id, merge_request_iid, body, options)
-    logger.debug(`After MRD.create`)
-
-    */
-
-    /*
     const FormData = require('form-data');
     const formData = new FormData();
     formData.append("body", body)
@@ -110,11 +94,11 @@ export async function gitlabCreateDiscussion(gitlab_url: string, gitlab_token: s
         'content-type': `multipart/form-data; boundary=${formData._boundary}`
     }
 
-    logger.info(`headers=${headers}`)
+    logger.debug(`headers=${headers}`)
 
     let url = `${gitlab_url}/api/v4/projects/${project_id}/merge_requests/${merge_request_iid}/discussions`
 
-    logger.info(`url=${url}`)
+    logger.debug(`url=${url}`)
 
     let res = undefined
     try {
@@ -123,22 +107,20 @@ export async function gitlabCreateDiscussion(gitlab_url: string, gitlab_token: s
                 headers: headers
             })
 
-        logger.info(`res=${res.status} res=${res.data} status=${res.statusText} h=${res.headers}`)
+        logger.debug(`res=${res.status} res=${res.data} status=${res.statusText} h=${res.headers}`)
 
         if (res.status > 201) {
             logger.error(`Unable to create discussion for ${filename}:${line} at ${url}`)
-            logger.info(`ERROR`)
-            return false
+            logger.debug(`ERROR`)
+            return
         }
 
     } catch (error: any) {
         // we'll proceed, but let's report it
-        logger.info(`ERROR: ${error.message}`)
+        logger.error(`${error.message}`)
     }
 
+    logger.debug(`OK`)
 
-    logger.info(`OK`)
-
-    return true
-    */
+    return
 }
