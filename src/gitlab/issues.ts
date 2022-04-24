@@ -10,10 +10,8 @@ export async function gitlabGetIssues(gitlab_url: string, gitlab_token: string, 
 
     let issues = await api.Issues.all({
         projectId: project_id,
-        options: {
-            search: title_search,
-            state: "opened"
-        }
+        search: title_search,
+        sate: "opened"
     })
 
     for (const issue of issues) {
