@@ -1,4 +1,4 @@
-import {logger} from "../../lib";
+import {logger} from "../SIGLogger";
 import {IssueSchema} from "@gitbeaker/core/dist/types/resources/Issues";
 import {Gitlab} from "@gitbeaker/node";
 
