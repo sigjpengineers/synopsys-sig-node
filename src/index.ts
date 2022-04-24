@@ -46,6 +46,11 @@ export {
   gitlabCreateDiscussionWithoutPosition
 } from './gitlab/discussions'
 export {
+  gitlabGetIssues,
+  gitlabCreateIssue,
+  gitlabCloseIssue
+} from './gitlab/issues'
+export {
   gitlabGetProject,
 } from './gitlab/gitlab-utils'
 // Black Duck
@@ -113,6 +118,7 @@ export {
   coverityCreateReviewCommentMessage,
   coverityCreateIssueCommentMessage,
   coverityIsInDiff,
+  coverityCreateIssue,
   COVERITY_COMMENT_PREFACE,
   COVERITY_NOT_PRESENT,
   COVERITY_PRESENT,

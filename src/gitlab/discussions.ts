@@ -54,7 +54,9 @@ export async function gitlabCreateDiscussionWithoutPosition(gitlab_url: string, 
 export async function gitlabCreateDiscussion(gitlab_url: string, gitlab_token: string, project_id: string, merge_request_iid: number,
                                              line: number, filename: string, body: string, base_sha: string, commit_sha: string): Promise<void> {
 
+    // This implementation comes from GitBeaker, but does not work in all cases
     /*
+
     const api = new Gitlab({ host: gitlab_url, token: gitlab_token })
 
     let merge_request = await api.MergeRequests.show(project_id, merge_request_iid)
