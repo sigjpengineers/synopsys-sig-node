@@ -11,15 +11,15 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "all": "npm run build && npm run format"
   },
-  "main": "dist/index.js",
-  "types": "dist/index.d.js",
+  "main": "lib/index.js",
+  "types": "lib/index.d.js",
   "files": [
     "lib"
   ],
   "author": "Synopsys Community",
   "license": "Apache-2.0",
   "devDependencies": {
-    "@types/node": "^17.0.21",
+    "@types/node": "^17.0.45",
     "prettier": "^2.5.1"
   },
   "dependencies": {

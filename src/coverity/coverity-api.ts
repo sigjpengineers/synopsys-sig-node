@@ -4,6 +4,8 @@ import {BasicCredentialHandler} from 'typed-rest-client/Handlers'
 import {RestClient} from 'typed-rest-client/RestClient'
 
 export const KEY_CID = 'cid'
+export const KEY_DISPLAY_IMPACT = 'displayImpact'
+export const KEY_DISPLAY_TYPE = 'displayType'
 export const KEY_MERGE_KEY = 'mergeKey'
 export const KEY_ACTION = 'action'
 export const KEY_CLASSIFICATION = 'classification'
@@ -85,7 +87,8 @@ export class CoverityApiService {
                     ]
                 }
             ],
-            columns: [KEY_CID, KEY_MERGE_KEY, KEY_ACTION, KEY_CLASSIFICATION, KEY_FIRST_SNAPSHOT_ID, KEY_LAST_SNAPSHOT_ID]
+            columns: [KEY_CID, KEY_DISPLAY_IMPACT, KEY_DISPLAY_TYPE, KEY_MERGE_KEY, KEY_ACTION, KEY_CLASSIFICATION,
+                KEY_FIRST_SNAPSHOT_ID, KEY_LAST_SNAPSHOT_ID]
         }
         const queryParameters: IRequestQueryParams = {
             params: {
