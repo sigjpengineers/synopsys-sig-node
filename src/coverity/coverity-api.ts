@@ -93,14 +93,17 @@ export class CoverityApiService {
         const queryParameters: IRequestQueryParams = {
             params: {
                 locale: 'en_us',
-                offset,
+                offset: offset,
                 rowCount: limit,
                 includeColumnLabels: 'true',
                 queryType: 'bySnapshot',
                 sortOrder: 'asc'
             }
         }
-        const response = await this.restClient.create<ICoverityIssuesSearchResponse>('/api/v2/issues/search', requestBody, {queryParameters})
+        // Maybe bug in RestClient as queryParameters are treated as headers not as parameters
+        //const response = await this.restClient.create<ICoverityIssuesSearchResponse>('/api/v2/issues/search', requestBody, {queryParameters})
+        const apiSearch = `/api/v2/issues/search?offset=${offset}&rowCount=${limit}&local=en_us&includeColumnLabels=true&queryType=bySnapshot&sortOrder=asc`
+        const response = await this.restClient.create<ICoverityIssuesSearchResponse>(apiSearch, requestBody)
         if (response.statusCode < 200 || response.statusCode >= 300) {
             debug(`Coverity response error: ${response.result}`)
             return Promise.reject(`Failed to retrieve issues from Coverity for project '${projectName}': ${response.statusCode}`)
