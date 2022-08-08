@@ -53,6 +53,10 @@ export {
 export {
   gitlabGetProject,
 } from './gitlab/gitlab-utils'
+export {
+  gitlabUpdateExistingReviewComment,
+  gitlabGetExistingReviewComment
+} from './gitlab/comment'
 // Black Duck
 export {
   IBlackduckView,
